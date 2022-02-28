@@ -11,6 +11,9 @@
 {#<h5>question:</h5>#}
 <h1>{{ question.title }}</h1>
 <h2>{{ question.message }}</h2>
+{% for ele in tags %}
+<p>{{ ele }}</p>
+{% endfor %}
 {% if question.image == None %}
 {% else %}
     <img style="margin-left: 100px" alt="image" src="{{url_for('static', filename='images/' + question.image )}}" width="300" height="300"  >

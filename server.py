@@ -182,12 +182,34 @@ def add_tag(question_id):
 
 @app.route('/question/<question_id>/new-tag', methods=['POST'])
 def new_tag(question_id):
+    all_tag = []
     question_id = int(question_id)
     newtag = request.form['newtag']
-    data_manager.save_new_tag(newtag)
-    new_id = data_manager.get_id_by_tag_name(newtag)
-    data_manager.save_tag_id_to_question(question_id, new_id['id'])
+    tags = data_manager.get_all_tags()
+    for tag in tags:
+        all_tag.append(tag['name'])
+    if newtag not in all_tag:
+        data_manager.save_new_tag(newtag)
+        new_id = data_manager.get_id_by_tag_name(newtag)
+        data_manager.save_tag_id_to_question(question_id, new_id["id"])
+    else:
+        used_tags = []
+        all_used_tags = data_manager.is_tag_alredy_in_question(question_id)
+        for ele in all_used_tags:
+            used_tags.append(ele['tag_id'])
+        new_id = data_manager.get_id_by_tag_name(newtag)
+        if new_id['id'] in used_tags:
+            return redirect(url_for('display_question', question_id=question_id))
+        else:
+            data_manager.save_tag_id_to_question(question_id, new_id["id"])
     return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/del-tag/<question_id>/<tag>')
+def del_tag_from_queestion(question_id, tag):
+    tag_id = data_manager.get_id_by_tag_name(tag)
+    data_manager.del_tag_from_question(question_id, tag_id["id"])
+    return redirect(f'/question/{question_id}/new-tag')
 
 
 def id_to_tags(question_id):
@@ -204,7 +226,7 @@ def id_to_tags(question_id):
             tag = data_manager.get_tag_name_by_id(ele)
             all_tags_name.append(tag['name'])
             tags = all_tags_name
-            return tags
+        return tags
 
 
 if __name__ == "__main__":

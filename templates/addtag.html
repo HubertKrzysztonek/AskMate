@@ -10,11 +10,11 @@
 {% else %}
     <p>Acual tags:</p>
     {% for tag in tags %}
-        <p>{{ tag }}</p>
+        <p>{{ tag }} - <a href="/del-tag/{{ question_id }}/{{ tag }}">X</a></p>
     {% endfor %}
 {% endif %}
 
-<form method="post" action="/question/{{ question_id }}/new-tag">
+<form method="post" action="/question/{{question_id}}/new-tag">
     <label for="newtag">Enter new tag</label>
     <input name="newtag">
     <input type="submit" value="Submit">

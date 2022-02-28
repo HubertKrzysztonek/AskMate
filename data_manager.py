@@ -19,7 +19,6 @@ def read_question(cursor, question_id):
 
 @database_common.connection_handler
 def read_all_question(cursor, question_id):
-    print(question_id)
     query = f"""
         SELECT * FROM question
         WHERE id = (%s);
@@ -94,7 +93,6 @@ def save_new_answer(cursor, question_id, message, image):
 
 @database_common.connection_handler
 def edit_answer(cursor, answer_id, message, image):
-    print(answer_id, message, image)
     query = f"""
     UPDATE answer 
     SET message = %s, image = %s 
@@ -132,7 +130,7 @@ def search_results_answers(cursor, text):
     return results
 
 
-print(search_results_answers('a'))
+# print(search_results_answers('a'))
 
 
 @database_common.connection_handler
@@ -153,7 +151,7 @@ def vote_down(cursor, question_id):
 
 @database_common.connection_handler
 def vote_up_answer(cursor, answer_id):
-    print(answer_id)
+    # print(answer_id)
     query = """
             UPDATE answer SET vote_number = vote_number +1 WHERE id = %s;
     """
@@ -334,3 +332,10 @@ def save_new_tag(cursor, newtag):
         VALUES (%s)
     """
     cursor.execute(query, [newtag])
+
+@database_common.connection_handler
+def del_tag_from_question(cursor, questid, tagid):
+    query = """
+                    DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
+                  """
+    cursor.execute(query, [questid, tagid])
