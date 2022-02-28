@@ -228,7 +228,7 @@ def read_comment_question(cursor, question_id):
         WHERE question_id = %s
     """
     cursor.execute(query, [question_id])
-    return cursor.fetchone()
+    return cursor.fetchall()
 
 
 @database_common.connection_handler
