@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>just_asq</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+</head>
+<body>
+<h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
+<div class="logo_line"></div>
+<br>
+<br>
+<br>
+<h1>ADD COMMENT TO {{ question.title }}</h1>
+<form action="/question/{{ question.id }}/new-comment" method="post">
+    <label for="message">Comment</label>
+    <input type="text" id="message" name="message">
+    <button type="submit">Add Comment</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+</head>
+<body>
+<h4>< just_ask ></h4>
+<div class="logo_line"></div>
+
+<form action="/search" method="get" , id="q">
+    <label for="q" style="margin-left: 100px"><Title></Title></label><br><br>
+    <textarea id="q" name="q" style=" height: 25px; width: 10%; margin-left: 75%"></textarea><br>
+    <button class="button-32" style="padding: 1px 5px;transition: 20ms; margin-left: 75% " type="submit">Search</button>
+
+    <br>
+    <h2 style="margin-left: 200px">LAST QUESTIONS: </h2>
+    {% for elem in last_questions %}
+        <p3 style="margin-left: 200px"><a style="color: aliceblue"
+                                          href="http://127.0.0.1:5000/question/{{ elem.id }}">{{ elem.title }}</a></p3>
+        <br>
+    {% endfor %}
+    <br> <br>
+    <button class="button-32" role="button" style="width:30%; margin-left: 200px">
+        <a style="font-size: 20px" href="{{ url_for('add_question_get') }}">ADD QUESTION</a></button>
+    <button class="button-32" role="button" style="width:30%">
+        <a style="font-size: 20px" href="/list">SEE QUESTIONS</a></button>
+</body>
+</html>

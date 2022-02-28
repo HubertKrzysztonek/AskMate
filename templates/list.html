@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of questions</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+</head>
+<body>
+<h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
+<div class="logo_line"></div>
+<br>
+<br>
+<h1>QUESTIONS </h1>
+<form action="/list" method="post">
+    <label style="margin-left: 100px" for="order">Sort:</label>
+    <select id="order" name="order">
+        <option value="ASC">increasing</option>
+        <option value="DESC">decreasing</option>
+    </select>
+    <select id="type" name="type">
+        <option value="title">title</option>
+        <option value="submission_time">submission time</option>
+        <option value="message">message</option>
+        <option value="view_number">number of views</option>
+        <option value="vote_number">number of votes</option>
+    </select>
+    <input type="submit" value="Sort!">
+
+</form>
+<br>
+{% for elem in lista %}
+    <div class="vl"></div>
+    <p4>Votes: {{ elem.vote_number }}</p4><br>
+    <p3><a style="color: aliceblue" href="http://127.0.0.1:5000/question/{{ elem.id }}">{{ elem.title }}</a></p3> <br>
+    <br>
+    <button class="button-66" role="button">
+        <a href="http://127.0.0.1:5000/question/{{ elem.id }}/edit">Edit question</a></button>
+    <button class="button-66" role="button">
+        <a href="http://127.0.0.1:5000/question/{{ elem.id }}/delete">Delete question</a></button>
+    <button class="button-32" role="button">
+        <a href="http://127.0.0.1:5000/question/{{ elem.id }}/vote_up">Vote up</a></button>
+    <button class="button-32" role="button">
+        <a href="http://127.0.0.1:5000/question/{{ elem.id }}/vote_down">Vote down</a></button>
+
+{% endfor %}
+
+</body>
+</html>

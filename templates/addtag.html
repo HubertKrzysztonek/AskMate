@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Tag</title>
+</head>
+<body>
+{% if tags == 'Notags' %}
+    <p>There is no tags!</p>
+{% else %}
+    <p>Acual tags:</p>
+    {% for tag in tags %}
+        <p>{{ tag }}</p>
+    {% endfor %}
+{% endif %}
+
+<form method="post" action="/question/{{ question_id }}/new-tag">
+    <label for="newtag">Enter new tag</label>
+    <input name="newtag">
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
