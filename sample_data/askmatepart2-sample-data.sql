@@ -38,6 +38,20 @@ CREATE TABLE question
     image           text
 );
 
+DROP TABLE IF EXISTS public.users;
+CREATE TABLE users
+(
+    id              serial NOT NULL,
+    username        text,
+    password        text,
+    registration    timestamp without time zone,
+    asked_questions integer,
+    answers         integer,
+    comments        integer,
+    reputation      integer,
+    image           text
+);
+
 DROP TABLE IF EXISTS public.answer;
 CREATE TABLE answer
 (
