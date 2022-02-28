@@ -163,3 +163,10 @@ INSERT INTO question_tag
 VALUES (1, 3);
 INSERT INTO question_tag
 VALUES (2, 3);
+
+INSERT INTO users
+(username,password,registration,asked_questions,answers,comments,reputation)
+VALUES ('Grzegorz','Holipka','12,10,2022',4,6,2,15)
+
+
+

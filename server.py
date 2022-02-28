@@ -40,7 +40,6 @@ def display_question(question_id):
     answer = data_manager.read_answer(question_id)
     comment = data_manager.read_comment_question(question_id)
     tags = id_to_tags(question_id)
-    print(tags)
     return render_template('display_question.html', question=question, answer=answer, comment=comment, tags=tags)
 
 
@@ -177,7 +176,6 @@ def comment_answer(answer_id):
 
 @app.route('/question/<question_id>/new-tag', methods=['GET'])
 def add_tag(question_id):
-    print(question_id)
     tags = id_to_tags(question_id)
     return render_template('addtag.html', tags=tags, question_id=question_id)
 
@@ -188,8 +186,6 @@ def new_tag(question_id):
     newtag = request.form['newtag']
     data_manager.save_new_tag(newtag)
     new_id = data_manager.get_id_by_tag_name(newtag)
-    print(type(new_id["id"]))
-    print(type(question_id))
     data_manager.save_tag_id_to_question(question_id, new_id['id'])
     return redirect(url_for('display_question', question_id=question_id))
 
