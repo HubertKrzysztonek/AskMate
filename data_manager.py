@@ -1,4 +1,5 @@
 import database_common
+import bcrypt
 from csv import writer
 from operator import itemgetter
 from psycopg2 import sql
@@ -379,7 +380,7 @@ def get_user_question(cursor, user_id):
     query = """
         SELECT *
         FROM question
-        WHERE user_id = %s
+        WHERE user_id= %s
     """
     cursor.execute(query, [user_id])
     return cursor.fetchall()
@@ -403,3 +404,34 @@ def is_tag_alredy_in_question(cursor, questid):
               """
     cursor.execute(query, [questid])
     return cursor.fetchall()
+
+@database_common.connection_handler
+def check_new_user(cursor, user, password):
+    salt = bcrypt.gensalt()
+    hashed_psw = bcrypt.hashpw(b'password', salt)
+    query = """
+    SELECT * 
+    FROM users
+    WHERE username = %s;
+    """
+    cursor.execute(query, [user])
+    users = cursor.fetchall()
+    if users == []:
+            query = """
+                INSERT INTO users
+                (username, password, registration, asked_questions, answers, comments, reputation, image) 
+                VALUES (%s,%s,current_timestamp,0,0,0,0, 'null')
+            """
+            cursor.execute(query, [user, hashed_psw])
+            return True
+    else:
+        return False
+
+check_new_user ('dragonpl','123456')
+
+
+def check_password (password, repeat_password):
+    if password != repeat_password:
+        return False
+    else:
+        return True
