@@ -217,7 +217,6 @@ def id_to_tags(question_id):
     all_tags_name = []
     all_question_tag_id = data_manager.get_all_tags_id_from_question(question_id)
     if all_question_tag_id == []:
-        tags = 'Notags'
         return tags
     else:
         for tag_name in all_question_tag_id:
@@ -227,6 +226,14 @@ def id_to_tags(question_id):
             all_tags_name.append(tag['name'])
             tags = all_tags_name
         return tags
+
+@app.route('/user/<user_id>')
+def user_page(user_id):
+    user = data_manager.get_user_data(user_id)
+    answer = data_manager.get_user_answer(user_id)
+    comment = data_manager.get_user_comment(user_id)
+    question = data_manager.get_user_question(user_id)
+    return render_template('user_page.html', user=user, answer=answer, comment=comment, question=question)
 
 
 if __name__ == "__main__":

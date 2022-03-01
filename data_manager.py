@@ -257,7 +257,7 @@ def update_comment(cursor, comment_id, message):
         SET message = %s , edited_count = edited_count + 1
         WHERE id = %s
     """
-    cursor.execute(query, [message, comment_id])
+    cursor.execute(query, (message, comment_id))
 
 
 @database_common.connection_handler
@@ -336,6 +336,46 @@ def save_new_tag(cursor, newtag):
 @database_common.connection_handler
 def del_tag_from_question(cursor, questid, tagid):
     query = """
-                    DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
-                  """
+            DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
+             """
     cursor.execute(query, [questid, tagid])
+
+@database_common.connection_handler
+def get_user_data(cursor, user_id):
+    query = """
+        SELECT *
+        FROM users
+        WHERE id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchone()
+
+@database_common.connection_handler
+def get_user_answer(cursor, user_id):
+    query = """
+        SELECT *
+        FROM answer
+        WHERE user_id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()
+
+@database_common.connection_handler
+def get_user_comment(cursor, user_id):
+    query = """
+        SELECT *
+        FROM comment
+        WHERE user_id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()
+
+@database_common.connection_handler
+def get_user_question(cursor, user_id):
+    query = """
+        SELECT *
+        FROM question
+        WHERE user_id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()

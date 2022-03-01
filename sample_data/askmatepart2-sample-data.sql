@@ -35,7 +35,8 @@ CREATE TABLE question
     vote_number     integer,
     title           text,
     message         text,
-    image           text
+    image           text,
+    user_id         integer
 );
 
 DROP TABLE IF EXISTS public.users;
@@ -60,7 +61,8 @@ CREATE TABLE answer
     vote_number     integer,
     question_id     integer,
     message         text,
-    image           text
+    image           text,
+    user_id         integer
 );
 
 DROP TABLE IF EXISTS public.comment;
@@ -71,7 +73,8 @@ CREATE TABLE comment
     answer_id       integer,
     message         text,
     submission_time timestamp without time zone,
-    edited_count    integer
+    edited_count    integer,
+    user_id         integer
 );
 
 
@@ -105,6 +108,18 @@ ALTER TABLE ONLY question_tag
 ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
 
+ALTER TABLE ONLY users
+    ADD CONSTRAINT pk_user_id PRIMARY KEY (id);
+
+ALTER TABLE ONLY answer
+    ADD CONSTRAINT fk_answer_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY comment
+    ADD CONSTRAINT fk_comment_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY question
+    ADD CONSTRAINT fk_question_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE;
+
 ALTER TABLE ONLY comment
     ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer (id) ON DELETE CASCADE;
 
@@ -134,19 +149,19 @@ booklet
 app.js (bundled file with webpack, including jquery)', 'images/image1.png');
 INSERT INTO question
 VALUES (2, '2017-05-01 10:41:00', 1364, 57, 'Drawing canvas with an image picked with Cordova Camera Plugin', 'I''m getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I''m on IOS, it throws errors such as cross origin issue, or that I''m trying to use an unknown format.
-', NULL);
+', NULL,1);
 SELECT pg_catalog.setval('question_id_seq', 2, true);
 
 INSERT INTO answer
-VALUES (1, '2017-04-28 16:49:00', 4, 1, 'You need to use brackets: my_list = []', NULL);
+VALUES (1, '2017-04-28 16:49:00', 4, 1, 'You need to use brackets: my_list = []', NULL,1);
 INSERT INTO answer
-VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg');
+VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg',1);
 SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
 INSERT INTO comment
-VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00');
+VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00',1);
 INSERT INTO comment
-VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00');
+VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00',1);
 SELECT pg_catalog.setval('comment_id_seq', 2, true);
 
 INSERT INTO tag

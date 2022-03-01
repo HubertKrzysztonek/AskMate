@@ -32,7 +32,7 @@
     <p3 align="right">Comment: {{  com.message }}</p3><br>
     <p3 align="right" style="font-size: 12px">Added time: {{ com.submission_time }} </p3><br>
     <p3 align="right"style="font-size: 12px">Edit time: {{ com.edited_count }}</p3><br>
-    <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 70%"><a href="/comment/{{ comment.id }}/edit">EDIT COMMENT</a> </button><br>
+    <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 70%"><a href="/comment/{{ com.id }}/edit">EDIT COMMENT</a> </button><br>
         {% endif %}
     {% endfor %}
 </div></div></div>
@@ -56,6 +56,7 @@
         <img src="{{url_for('static', filename='images/' + elem.image )}}" width="300" height="300" align="flex" >
     {% endif %}
     <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 100px"><a href="/answer/{{ elem.id }}/new-comment">ADD COMMENT</a> </button>
+
     <div style="margin-left: 100px; margin-right: 500px" class="wrap-collapsible"> <input id="collapsible{{ elem.id }}" class="toggle" type="checkbox">
     <label for="collapsible{{ elem.id }}" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
        {%  for com in comment %}
@@ -66,7 +67,6 @@
     <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 70%"><a href="/comment/{{ com.id }}/edit">EDIT COMMENT</a> </button><br>
         {% endif %}
         {% endfor %}
-
 </div></div></div>
     {% endfor %}</h3> <br> <br>
 
