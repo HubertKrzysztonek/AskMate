@@ -1,10 +1,6 @@
-import database_common
 import bcrypt
-from csv import writer
-from operator import itemgetter
-from psycopg2 import sql
-from psycopg2.extras import RealDictCursor
-from typing import List, Dict
+
+import database_common
 
 
 @database_common.connection_handler
@@ -15,7 +11,6 @@ def read_question(cursor, question_id):
     """
     cursor.execute(query, [question_id])
     return cursor.fetchone()
-
 
 
 @database_common.connection_handler
@@ -334,12 +329,14 @@ def save_new_tag(cursor, newtag):
     """
     cursor.execute(query, [newtag])
 
+
 @database_common.connection_handler
 def del_tag_from_question(cursor, questid, tagid):
     query = """
             DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
              """
     cursor.execute(query, [questid, tagid])
+
 
 @database_common.connection_handler
 def get_user_data(cursor, user_id):
@@ -350,6 +347,7 @@ def get_user_data(cursor, user_id):
     """
     cursor.execute(query, [user_id])
     return cursor.fetchone()
+
 
 @database_common.connection_handler
 def check_new_user(cursor, user, password):
@@ -363,17 +361,19 @@ def check_new_user(cursor, user, password):
     cursor.execute(query, [user])
     users = cursor.fetchall()
     if users == []:
-            query = """
+        query = """
                 INSERT INTO users
                 (username, password, registration, asked_questions, answers, comments, reputation, image) 
                 VALUES (%s,%s,current_timestamp,0,0,0,0, 'null')
             """
-            cursor.execute(query, [user, hashed_psw])
-            return True
+        cursor.execute(query, [user, hashed_psw])
+        return True
     else:
         return False
 
-check_new_user ('dragonpl','123456')
+
+check_new_user('dragonpl', '123456')
+
 
 @database_common.connection_handler
 def get_user_question(cursor, user_id):
@@ -384,6 +384,29 @@ def get_user_question(cursor, user_id):
     """
     cursor.execute(query, [user_id])
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_user_answer(cursor, user_id):
+    query = """
+        SELECT *
+        FROM answer
+        WHERE user_id= %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_user_comment(cursor, user_id):
+    query = """
+        SELECT *
+        FROM comment
+        WHERE user_id= %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()
+
 
 @database_common.connection_handler
 def get_all_tags(cursor):
@@ -405,6 +428,7 @@ def is_tag_alredy_in_question(cursor, questid):
     cursor.execute(query, [questid])
     return cursor.fetchall()
 
+
 @database_common.connection_handler
 def check_new_user(cursor, user, password):
     salt = bcrypt.gensalt()
@@ -417,32 +441,41 @@ def check_new_user(cursor, user, password):
     cursor.execute(query, [user])
     users = cursor.fetchall()
     if users == []:
-            query = """
+        query = """
                 INSERT INTO users
                 (username, password, registration, asked_questions, answers, comments, reputation, image) 
                 VALUES (%s,%s,current_timestamp,0,0,0,0, 'null')
             """
-            cursor.execute(query, [user, hashed_psw])
-            return True
+        cursor.execute(query, [user, hashed_psw])
+        return True
     else:
         return False
 
-check_new_user ('dragonpl','123456')
+
+check_new_user('dragonpl', '123456')
 
 
-def check_password (password, repeat_password):
+def check_password(password, repeat_password):
     if password != repeat_password:
         return False
     else:
         return True
-    cursor.execute(query, [user_id])
-    return cursor.fetchall()
+
 
 @database_common.connection_handler
 def update_user_reputation(cursor, user_id, value):
     query = """
     UPDATE users 
-    SET reputation = users.reputation + %s
+    SET reputation = reputation + %s
     WHERE id = %s
     """
     cursor.execute(query, (value, user_id))
+
+@database_common.connection_handler
+def lost_user_reputation(cursor, user_id):
+    query = """
+    UPDATE users 
+    SET reputation = reputation - 2
+    WHERE id = %s
+    """
+    cursor.execute(query, [user_id])
