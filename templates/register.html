@@ -9,18 +9,32 @@
 <h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
 <div class="logo_line"></div>
 <br>
-<br>
-<h1>Sign up</h1>
-<br>
-<form action="/register" method="post" enctype="multipart/form-data">
-    Username <input type="text" name="username" /><br/>
-    Create password: <input type="password" name="password" /><br/>
-    Repeat password: <input type="password" name="repeat_password" /><br/>
-    <p3>Add profile photo</p3>
-    <br><br>
-    <input style="margin-left: 100px" type="file" name="file">
-    <button class="button-32" role="button" style="margin-left: 100px" type="submit" value="Submit">Submit</button>
+<script type="text/javascript">
+    function same_password() {
+        console.log ('funkcja wchodzi')
+        var wrong_passwords = {{wrong_passwords|tojson}}
+        console.log (wrong_passwords)
+
+        if (wrong_passwords) {
+            alert('There are not the same passwords');
+        }
+    }
+    same_password();
+</script>
     <br>
-</form>
-</body>
-</html>
+        <h1>Sign up</h1>
+        <br>
+            <form action="/register/" method="post" enctype="multipart/form-data">
+                Username <input type="text" name="username"/><br/>
+                Create password: <input type="password" name="password"/><br/>
+                Repeat password: <input type="password" name="repeat_password"/><br/>
+                <p3>Add profile photo</p3>
+                <br><br>
+                    <input style="margin-left: 100px" type="file" name="file">
+                        <button class="button-32" role="button" style="margin-left: 100px" type="submit"
+                                value="Submit">Submit
+                        </button>
+                        <br>
+            </form>
+        </body>
+    </html>

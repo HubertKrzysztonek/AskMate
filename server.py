@@ -232,12 +232,14 @@ def id_to_tags(question_id):
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
+        if data_manager.check_password (password = request.form['password'], repeat_password =request.form['repeat_password']) != True:
+            wrong_passwords = True
+            return (render_template('register.html', wrong_passwords=wrong_passwords ))
 
-        if data_manager.new_user (user = request.form['username'] , password = request.form['password'], repeat_password =request.form['repeat_password']):
-            redirect(url_for('hello'))
+        if data_manager.check_new_user (user = request.form['username'] , password = request.form['password']):
+            return redirect(url_for('hello'))
+    return render_template('register.html', wrong_passwords=False)
 
-
-    return render_template('register.html')
 @app.route('/user/<user_id>')
 def user_page(user_id):
     user = data_manager.get_user_data(user_id)

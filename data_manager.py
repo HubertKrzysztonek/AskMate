@@ -2,9 +2,9 @@ import database_common
 from csv import writer
 from operator import itemgetter
 from psycopg2 import sql
-from psycopg2.extras import RealDictCursor
+# from psycopg2.upextras import RealDictCursor
 from typing import List, Dict
-
+import bcrypt
 
 @database_common.connection_handler
 def read_question(cursor, question_id):
@@ -347,3 +347,34 @@ def del_tag_from_question(cursor, questid, tagid):
                     DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
                   """
     cursor.execute(query, [questid, tagid])
+
+@database_common.connection_handler
+def check_new_user(cursor, user, password):
+    salt = bcrypt.gensalt()
+    hashed_psw = bcrypt.hashpw(b'password', salt)
+    query = """
+    SELECT * 
+    FROM users
+    WHERE username = %s;
+    """
+    cursor.execute(query, [user])
+    users = cursor.fetchall()
+    if users == []:
+            query = """
+                INSERT INTO users
+                (username, password, registration, asked_questions, answers, comments, reputation, image) 
+                VALUES (%s,%s,current_timestamp,0,0,0,0, 'null')
+            """
+            cursor.execute(query, [user, hashed_psw])
+            return True
+    else:
+        return False
+
+check_new_user ('dragonpl','123456')
+
+
+def check_password (password, repeat_password):
+    if password != repeat_password:
+        return False
+    else:
+        return True
