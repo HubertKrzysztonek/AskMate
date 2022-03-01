@@ -19,7 +19,6 @@ def read_question(cursor, question_id):
 
 @database_common.connection_handler
 def read_all_question(cursor, question_id):
-    print(question_id)
     query = f"""
         SELECT * FROM question
         WHERE id = (%s);
@@ -132,7 +131,7 @@ def search_results_answers(cursor, text):
     return results
 
 
-print(search_results_answers('a'))
+# print(search_results_answers('a'))
 
 
 @database_common.connection_handler
@@ -153,7 +152,7 @@ def vote_down(cursor, question_id):
 
 @database_common.connection_handler
 def vote_up_answer(cursor, answer_id):
-    print(answer_id)
+    # print(answer_id)
     query = """
             UPDATE answer SET vote_number = vote_number +1 WHERE id = %s;
     """
@@ -228,7 +227,7 @@ def read_comment_question(cursor, question_id):
         WHERE question_id = %s
     """
     cursor.execute(query, [question_id])
-    return cursor.fetchone()
+    return cursor.fetchall()
 
 
 @database_common.connection_handler
@@ -259,7 +258,7 @@ def update_comment(cursor, comment_id, message):
         SET message = %s , edited_count = edited_count + 1
         WHERE id = %s
     """
-    cursor.execute(query, [message, comment_id])
+    cursor.execute(query, (message, comment_id))
 
 
 @database_common.connection_handler

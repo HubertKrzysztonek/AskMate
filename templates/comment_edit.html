@@ -12,7 +12,7 @@
 <br>
 <h1>EDIT COMMENT {{ comment.message }}</h1>
 <br>
-{% if commment.question_id %}
+{% if comment.question_id %}
     <form action="/comment/{{ comment.id }}/edit" method="post">
         <textarea id="message" name="message"></textarea><br><br>
         <button type="submit" class="button-32" role="button"

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Display Question</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
 </head>
 <body>
 <h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
@@ -11,64 +11,65 @@
 {#<h5>question:</h5>#}
 <h1>{{ question.title }}</h1>
 <h2>{{ question.message }}</h2>
+{% for ele in tags %}
+<p>{{ ele }}</p>
+{% endfor %}
 {% if question.image == None %}
 {% else %}
-    <img style="margin-left: 100px" src="{{ url_for('static', filename='images/' + question.image ) }}" width="300"
-         height="300" align="flex">
+    <img style="margin-left: 100px" alt="image" src="{{url_for('static', filename='images/' + question.image )}}" width="300" height="300"  >
 {% endif %}
 
-
 <form method="get" type="button" action="/question/{{ question.id }}/new-tag">
-    <button style="color: #eeeeee" class="button-32" role="button">
-        <p1>Add tag</p1>
-    </button>
-
-
+   <button style="color: #eeeeee" class="button-32" role="button">
+       <p1>Add tag</p1> </button>
 </form>
+<button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 100px"><a href="/question/{{ question.id }}/new-comment">ADD COMMENT</a> </button>
 <br>
-<div style="margin-left: 100px; margin-right: 500px" class="wrap-collabsible"><input id="collapsible" class="toggle"
-                                                                                     type="checkbox">
-    <label for="collapsible" class="lbl-toggle">Comments:</label>
-    <div class="collapsible-content">
-        <div class="content-inner">
-            {% if comment %}
-                <p3 align="right">Comment: {{ comment.message }}</p3><br>
-                <p3 align="right" style="font-size: 12px">Added time: {{ comment.submission_time }} </p3><br>
-                <p3 align="right" style="font-size: 12px">Edit time: {{ comment.edited_count }}</p3><br>
-                <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 70%"><a
-                        href="/comment/{{ comment.id }}/edit">EDIT COMMENT</a></button><br>
-
-            {% endif %}
-        </div>
-    </div>
-</div>
+<div style="margin-left: 100px; margin-right: 500px" class="wrap-collabsible"> <input id="collapsible" class="toggle" type="checkbox">
+    <label for="collapsible" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
+    {%  for com in comment %}
+        {% if com.answer_id == None %}
+    <p3 align="right">Comment: {{  com.message }}</p3><br>
+    <p3 align="right" style="font-size: 12px">Added time: {{ com.submission_time }} </p3><br>
+    <p3 align="right"style="font-size: 12px">Edit time: {{ com.edited_count }}</p3><br>
+    <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 70%"><a href="/comment/{{ com.id }}/edit">EDIT COMMENT</a> </button><br>
+        {% endif %}
+    {% endfor %}
+</div></div></div>
+<button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 200px"><a href="http://127.0.0.1:5000/question/{{question.id}}/new-answer">ADD ANSWER</a></button>
 <h3 style="color: #f4e603; margin-left: 100px">Answers:</h3>
 <h3>{% for elem in answer %}
     <div class="vl"></div>
-    <p4>Votes: {{ elem.vote_number }}</p4><br>
-    <p3>{{ elem.message }}</p3><br>
+    <p4>Votes: {{elem.vote_number}}</p4><br>
+    <p3>{{elem.message}}</p3><br>
     <br>
     <button class="button-32" role="button">
-        <a href="http://127.0.0.1:5000/answer/{{ elem.id }}/vote_up">Vote up</a></button>
-    <button class="button-32" role="button">
-        <a href="http://127.0.0.1:5000/answer/{{ elem.id }}/vote_down">Vote down</a></button>
+    <a href="http://127.0.0.1:5000/answer/{{elem.id}}/vote_up">Vote up</a></button>
+     <button class="button-32" role="button">
+    <a href="http://127.0.0.1:5000/answer/{{elem.id}}/vote_down">Vote down</a></button>
+        <button class="button-66" role="button">
+    <a href="http://127.0.0.1:5000/answer/{{elem.id}}/edit">Edit answer</a></button>
     <button class="button-66" role="button">
-        <a href="http://127.0.0.1:5000/answer/{{ elem.id }}/edit">Edit answer</a></button>
-    <button class="button-66" role="button">
-        <a href="http://127.0.0.1:5000/answer/{{ elem.id }}/delete">Delete answer</a></button> <br><br>
+    <a href="http://127.0.0.1:5000/answer/{{elem.id}}/delete">Delete answer</a></button> <br><br>
     {% if elem.image == None %}
     {% else %}
-        <img src="{{ url_for('static', filename='images/' + elem.image ) }}" width="300" height="300" align="flex">
+        <img src="{{url_for('static', filename='images/' + elem.image )}}" width="300" height="300" align="flex" >
     {% endif %}
-{% endfor %}</h3>
-<br> <br>
-{% if comment %}
-{% else %}
-    <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 100px"><a
-            href="/question/{{ question.id }}/new-comment">ADD COMMENT</a></button>
-{% endif %}
-<button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 200px"><a
-        href="http://127.0.0.1:5000/question/{{ question.id }}/new-answer">ADD ANSWER</a></button>
+    <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 100px"><a href="/answer/{{ elem.id }}/new-comment">ADD COMMENT</a> </button>
+
+    <div style="margin-left: 100px; margin-right: 500px" class="wrap-collapsible"> <input id="collapsible{{ elem.id }}" class="toggle" type="checkbox">
+    <label for="collapsible{{ elem.id }}" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
+       {%  for com in comment %}
+        {% if com.answer_id == elem.id %}
+    <p3 align="right">Comment: {{  com.message }}</p3><br>
+    <p3 align="right" style="font-size: 12px">Added time: {{ com.submission_time }} </p3><br>
+    <p3 align="right" style="font-size: 12px">Edit time: {{ com.edited_count }}</p3><br>
+    <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 70%"><a href="/comment/{{ com.id }}/edit">EDIT COMMENT</a> </button><br>
+        {% endif %}
+        {% endfor %}
+</div></div></div>
+    {% endfor %}</h3> <br> <br>
+
 
 
 </body>

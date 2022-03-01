@@ -177,6 +177,7 @@ def comment_answer(answer_id):
 
 @app.route('/question/<question_id>/new-tag', methods=['GET'])
 def add_tag(question_id):
+    print(question_id)
     tags = id_to_tags(question_id)
     return render_template('addtag.html', tags=tags, question_id=question_id)
 
@@ -237,6 +238,14 @@ def register():
 
 
     return render_template('register.html')
+@app.route('/user/<user_id>')
+def user_page(user_id):
+    user = data_manager.get_user_data(user_id)
+    answer = data_manager.get_user_answer(user_id)
+    comment = data_manager.get_user_comment(user_id)
+    question = data_manager.get_user_question(user_id)
+    return render_template('user_page.html', user=user, answer=answer, comment=comment, question=question)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

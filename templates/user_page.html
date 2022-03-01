@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+table, th, td {
+  border: 5px solid yellow;
+  border-collapse: collapse;
+}
+th, td {
+    color: black;
+  background-color: dodgerblue;
+}
+td {
+    text-align: left
+}
+</style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+</head>
+<body>
+    <p>User ID: {{ user.id }}</p><br>
+    <p>Nick: {{ user.username }}</p><br>
+    <p>Registration date: {{ user.registration }}</p><br>
+    <p>Question: {{ user.asked_questions }}</p><br>
+    <p>Answer: {{ user.answers }}</p><br>
+    <p>Comment: {{ user.comments }}</p><br>
+    <p>Reputation: {{ user.reputation }}</p><br>
+    {% if answer %}
+    <h1>Answer</h1>
+        <table style="width:100% ">
+      <tr>
+        <th>Submission time</th>
+        <th>Message</th>
+        <th>Vote number</th>
+      </tr>
+            {% for ans in answer %}
+              <tr>
+                <td>{{ ans.submission_time }}</td>
+                <td>{{ ans.message }}</td>
+                <td>{{ ans.vote_number }}</td>
+              </tr>
+            {% endfor %}
+        {% else %}
+    {% endif %}
+    {% if comment %}
+    <h1>Comment</h1>
+        <table style="width:100% ">
+      <tr>
+        <th>Submission time</th>
+        <th>Message</th>
+        <th>Vote number</th>
+      </tr>
+            {% for ans in answer %}
+              <tr>
+                <td>{{ ans.submission_time }}</td>
+                <td>{{ ans.message }}</td>
+                <td>{{ ans.vote_number }}</td>
+              </tr>
+            {% endfor %}
+        {% else %}
+    {% endif %}
+</body>
+</html>
