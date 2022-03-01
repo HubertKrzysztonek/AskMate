@@ -2,9 +2,9 @@ import database_common
 from csv import writer
 from operator import itemgetter
 from psycopg2 import sql
-# from psycopg2.upextras import RealDictCursor
+from psycopg2.extras import RealDictCursor
 from typing import List, Dict
-import bcrypt
+
 
 @database_common.connection_handler
 def read_question(cursor, question_id):
@@ -93,7 +93,6 @@ def save_new_answer(cursor, question_id, message, image):
 
 @database_common.connection_handler
 def edit_answer(cursor, answer_id, message, image):
-    print(answer_id, message, image)
     query = f"""
     UPDATE answer 
     SET message = %s, image = %s 
@@ -337,16 +336,19 @@ def save_new_tag(cursor, newtag):
 @database_common.connection_handler
 def del_tag_from_question(cursor, questid, tagid):
     query = """
-                    DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
-                  """
+            DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
+             """
     cursor.execute(query, [questid, tagid])
 
 @database_common.connection_handler
-def del_tag_from_question(cursor, questid, tagid):
+def get_user_data(cursor, user_id):
     query = """
-                    DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
-                  """
-    cursor.execute(query, [questid, tagid])
+        SELECT *
+        FROM users
+        WHERE id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchone()
 
 @database_common.connection_handler
 def check_new_user(cursor, user, password):
@@ -372,9 +374,32 @@ def check_new_user(cursor, user, password):
 
 check_new_user ('dragonpl','123456')
 
+@database_common.connection_handler
+def get_user_question(cursor, user_id):
+    query = """
+        SELECT *
+        FROM question
+        WHERE user_id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()
 
-def check_password (password, repeat_password):
-    if password != repeat_password:
-        return False
-    else:
-        return True
+@database_common.connection_handler
+def get_all_tags(cursor):
+    query = """
+               SELECT * 
+                FROM tag
+           """
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def is_tag_alredy_in_question(cursor, questid):
+    query = """
+                SELECT tag_id 
+                FROM question_tag
+                WHERE  %s = question_id
+              """
+    cursor.execute(query, [questid])
+    return cursor.fetchall()
