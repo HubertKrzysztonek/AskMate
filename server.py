@@ -121,6 +121,8 @@ def answer_delete(answer_id):
 @app.route("/question/<question_id>/vote_up")
 def question_vote_up(question_id):
     data_manager.vote_up(question_id)
+    question = data_manager.read_question(question_id=question_id)
+    data_manager.update_user_reputation(user_id=question['user_id'], value=5)
     return redirect("/list")
 
 

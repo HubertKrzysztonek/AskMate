@@ -8,13 +8,13 @@ from typing import List, Dict
 
 @database_common.connection_handler
 def read_question(cursor, question_id):
-    query = f"""
+    query = """
     SELECT * FROM question
-    WHERE id = (%s);
+    WHERE id = %s
     """
-    cursor.execute(query, (question_id,))
-    question = cursor.fetchone()
-    return question
+    cursor.execute(query, [question_id])
+    return cursor.fetchone()
+
 
 
 @database_common.connection_handler
@@ -379,3 +379,12 @@ def get_user_question(cursor, user_id):
     """
     cursor.execute(query, [user_id])
     return cursor.fetchall()
+
+@database_common.connection_handler
+def update_user_reputation(cursor, user_id, value):
+    query = """
+    UPDATE users 
+    SET reputation = users.reputation + %s
+    WHERE id = %s
+    """
+    cursor.execute(query, (value, user_id))
