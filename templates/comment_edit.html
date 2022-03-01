@@ -12,15 +12,15 @@
 <br>
 <h1>EDIT COMMENT {{ comment.message }}</h1>
 <br>
-{% if comment.question_id %}
+{% if comment.question_id != None %}
     <form action="/comment/{{ comment.id }}/edit" method="post">
-        <textarea id="message" name="message"></textarea><br><br>
+        <label for="message"></label><textarea id="message" name="message"></textarea><br><br>
         <button type="submit" class="button-32" role="button"
                 style="background-color: #f4e603;width:30%; margin-left: 5%">EDIT QUESTION COMMENT
         </button>
         <br>
     </form>
-{% elif comment.answer_id %}
+{% elif comment.answer_id != None %}
     <form action="/answer/{{ comment.answer_id }}/new-comment" method="post">
         <textarea id="message" name="message"></textarea><br><br>
         <button type="submit" class="button-32" role="button"

@@ -3,12 +3,12 @@
 <head>
     <style>
 table, th, td {
-  border: 5px solid yellow;
+  border: 5px solid dodgerblue;
   border-collapse: collapse;
 }
 th, td {
     color: black;
-  background-color: dodgerblue;
+  background-color: yellow;
 }
 td {
     text-align: left
@@ -19,33 +19,43 @@ td {
      <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
 </head>
 <body>
-    <p>User ID: {{ user.id }}</p><br>
-    <p>Nick: {{ user.username }}</p><br>
-    <p>Registration date: {{ user.registration }}</p><br>
-    <p>Question: {{ user.asked_questions }}</p><br>
-    <p>Answer: {{ user.answers }}</p><br>
-    <p>Comment: {{ user.comments }}</p><br>
-    <p>Reputation: {{ user.reputation }}</p><br>
-    {% if answer %}
-    <h1>Answer</h1>
-        <table style="width:100% ">
+<h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
+<div class="logo_line"></div>
+    <h5>User ID: {{ user.id }}</h5><br>
+    <h5>Nick: {{ user.username }}</h5><br>
+    <h5>Registration date: {{ user.registration }}</h5><br>
+    <h5>Question: {{ user.asked_questions }}</h5><br>
+    <h5>Answer: {{ user.answers }}</h5><br>
+    <h5>Comment: {{ user.comments }}</h5><br>
+    <h5>Reputation: {{ user.reputation }}</h5><br>
+     <button class="button-32" role="button">
+    <a href="/users">USER LIST</a></button>
+      {% if question %}
+    <h1>Question</h1>
+        <table style="width:90% ">
       <tr>
         <th>Submission time</th>
+          <th>Title</th>
         <th>Message</th>
-        <th>Vote number</th>
+          <th>View</th>
+          <th>Vote</th>
       </tr>
-            {% for ans in answer %}
+            {% for que in question %}
               <tr>
-                <td>{{ ans.submission_time }}</td>
-                <td>{{ ans.message }}</td>
-                <td>{{ ans.vote_number }}</td>
+                <td>{{ que.submission_time }}</td>
+                  <td>{{ que.title }}</td>
+                <td>{{ que.message }}</td>
+                <td>{{ que.view_number }}</td>
+              <td>{{ que.vote_number }}</td>
               </tr>
             {% endfor %}
+        </table>
         {% else %}
     {% endif %}
-    {% if comment %}
-    <h1>Comment</h1>
-        <table style="width:100% ">
+
+    {% if answer %}
+    <h1>Answer</h1>
+        <table style="width:90% ">
       <tr>
         <th>Submission time</th>
         <th>Message</th>
@@ -58,6 +68,26 @@ td {
                 <td>{{ ans.vote_number }}</td>
               </tr>
             {% endfor %}
+        </table>
+        {% else %}
+    {% endif %}
+
+    {% if comment %}
+    <h1>Comment</h1>
+        <table style="width:90% ">
+      <tr>
+        <th>Submission time</th>
+        <th>Message</th>
+        <th>Edit count</th>
+      </tr>
+            {% for com in comment %}
+              <tr>
+                <td>{{ com.submission_time }}</td>
+                <td>{{ com.message }}</td>
+                <td>{{ com.edited_count }}</td>
+              </tr>
+            {% endfor %}
+        </table>
         {% else %}
     {% endif %}
 </body>
