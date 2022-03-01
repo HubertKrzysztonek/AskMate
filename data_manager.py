@@ -341,3 +341,10 @@ def del_tag_from_question(cursor, questid, tagid):
                     DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
                   """
     cursor.execute(query, [questid, tagid])
+
+@database_common.connection_handler
+def del_tag_from_question(cursor, questid, tagid):
+    query = """
+                    DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
+                  """
+    cursor.execute(query, [questid, tagid])

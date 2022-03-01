@@ -230,6 +230,12 @@ def id_to_tags(question_id):
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
+    if request.method == "POST":
+
+        if data_manager.new_user (user = request.form['username'] , password = request.form['password'], repeat_password =request.form['repeat_password']):
+            redirect(url_for('hello'))
+
+
     return render_template('register.html')
 
 if __name__ == "__main__":
