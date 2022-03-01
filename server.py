@@ -50,7 +50,7 @@ def edit_answer(answer_id):
     question = data_manager.read_question(question_id)
     if request.method == 'POST':
         message = request.form['answer']
-        image = 'null'
+        image = None
         data_manager.edit_answer(answer_id, message, image)
         return redirect(f'/question/{question_id}')
     return render_template('edit_answer.html', answer=answer, question=question)
@@ -65,12 +65,15 @@ def add_question_get():
 def add_question_post():
     sub_tim = str(datetime.datetime.now())
     image = request.files['file']
+    print(f'to jest {image}')
+    if image.filename != '':
+        base_dir = os.path.abspath(os.path.dirname(__file__))
+        image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
+    else:
+        image.filename = None
     sub_tim = str(datetime.datetime.now())
-    base_dir = os.path.abspath(os.path.dirname(__file__))
-    image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
-    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'],
-                                           message=request.form['message'],
-                                           image=image.filename)
+    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'], message=request.form['message'],
+                                         image=image.filename)
     return redirect(f'/question/{new_id}')
 
 
@@ -188,6 +191,8 @@ def new_tag(question_id):
     tags = data_manager.get_all_tags()
     for tag in tags:
         all_tag.append(tag['name'])
+    print(f'to jest all tag {all_tag}')
+    print(f'New tag {newtag}')
     if newtag not in all_tag:
         data_manager.save_new_tag(newtag)
         new_id = data_manager.get_id_by_tag_name(newtag)
@@ -217,6 +222,7 @@ def id_to_tags(question_id):
     all_tags_name = []
     all_question_tag_id = data_manager.get_all_tags_id_from_question(question_id)
     if all_question_tag_id == []:
+        tags = 'Notags'
         return tags
     else:
         for tag_name in all_question_tag_id:

@@ -379,3 +379,23 @@ def get_user_question(cursor, user_id):
     """
     cursor.execute(query, [user_id])
     return cursor.fetchall()
+
+@database_common.connection_handler
+def get_all_tags(cursor):
+    query = """
+               SELECT * 
+                FROM tag
+           """
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def is_tag_alredy_in_question(cursor, questid):
+    query = """
+                SELECT tag_id 
+                FROM question_tag
+                WHERE  %s = question_id
+              """
+    cursor.execute(query, [questid])
+    return cursor.fetchall()
