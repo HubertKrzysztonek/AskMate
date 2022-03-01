@@ -228,7 +228,7 @@ def id_to_tags(question_id):
         return tags
 
 @app.route('/user/<user_id>')
-def user_page(user_id):
+def single_user_page(user_id):
     user = data_manager.get_user_data(user_id)
     answer = data_manager.get_user_answer(user_id)
     comment = data_manager.get_user_comment(user_id)
