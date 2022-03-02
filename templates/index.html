@@ -7,7 +7,14 @@
 </head>
 <body>
 <h4>< just_ask ></h4>
+{%  if session[username] %}
+<p2><a style="color: yellow; margin-left: 500px" href="/logout"> logout </a></p2>
+{%  else %}
+<p2><a style="color: yellow; margin-left: 400px" href="/login"> login </a></p2>
+<p2><a style="color: yellow" href="/registration"> sign up </a></p2>
+{% endif %}
 <div class="logo_line"></div>
+
 
 <form action="/search" method="get" , id="q">
     <label for="q" style="margin-left: 100px"><Title></Title></label><br><br>

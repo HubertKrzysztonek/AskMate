@@ -405,10 +405,16 @@ def is_tag_alredy_in_question(cursor, questid):
     cursor.execute(query, [questid])
     return cursor.fetchall()
 
+
+def code(password):
+    password = password.encode('utf-8')
+    hashed_psw = bcrypt.hashpw(password, bcrypt.gensalt())
+    return hashed_psw.decode('utf-8')
+
 @database_common.connection_handler
 def check_new_user(cursor, user, password):
-    salt = bcrypt.gensalt()
-    hashed_psw = bcrypt.hashpw(b'password', salt)
+    password = code(password)
+    print (password)
     query = """
     SELECT * 
     FROM users
@@ -422,16 +428,35 @@ def check_new_user(cursor, user, password):
                 (username, password, registration, asked_questions, answers, comments, reputation, image) 
                 VALUES (%s,%s,current_timestamp,0,0,0,0, 'null')
             """
-            cursor.execute(query, [user, hashed_psw])
+            cursor.execute(query, (user, password))
             return True
     else:
         return False
-
-check_new_user ('dragonpl','123456')
-
 
 def check_password (password, repeat_password):
     if password != repeat_password:
         return False
     else:
         return True
+
+
+class BCryptHelper:
+    pass
+
+
+@database_common.connection_handler
+def check_login (cursor, username, password):
+    query = """
+        SELECT password
+        FROM users
+        WHERE username = %s
+    """
+    cursor.execute(query, [username])
+    database_user = cursor.fetchone()
+    if database_user != None:
+        if bcrypt.checkpw(password.encode('utf-8'), database_user['password'].encode('utf-8')):
+            return True
+        else:
+            return False
+    else:
+        return False
