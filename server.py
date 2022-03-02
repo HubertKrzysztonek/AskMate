@@ -1,7 +1,9 @@
-from flask import Flask, render_template, redirect, request, url_for
-import data_manager
-import os
 import datetime
+import os
+
+from flask import Flask, render_template, redirect, request, url_for
+
+import data_manager
 
 app = Flask(__name__)
 app.config["IMAGE_UPLOADS"] = 'static/images'
@@ -75,8 +77,9 @@ def add_question_post():
     else:
         image.filename = None
     sub_tim = str(datetime.datetime.now())
-    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'], message=request.form['message'],
-                                         image=image.filename)
+    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'],
+                                           message=request.form['message'],
+                                           image=image.filename)
     return redirect(f'/question/{new_id}')
 
 
@@ -194,6 +197,7 @@ def add_tag(question_id):
     tags = id_to_tags(question_id)
     return render_template('addtag.html', tags=tags, question_id=question_id)
 
+
 @app.route('/del-tag/<question_id>/<tag>')
 def del_tag_from_queestion(question_id, tag):
     tag_id = data_manager.get_id_by_tag_name(tag)
@@ -244,16 +248,19 @@ def id_to_tags(question_id):
             tags = all_tags_name
         return tags
 
+
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
-        if data_manager.check_password (password = request.form['password'], repeat_password =request.form['repeat_password']) != True:
+        if data_manager.check_password(password=request.form['password'],
+                                       repeat_password=request.form['repeat_password']) != True:
             wrong_passwords = True
-            return (render_template('register.html', wrong_passwords=wrong_passwords ))
+            return (render_template('register.html', wrong_passwords=wrong_passwords))
 
-        if data_manager.check_new_user (user = request.form['username'] , password = request.form['password']):
+        if data_manager.check_new_user(user=request.form['username'], password=request.form['password']):
             return redirect(url_for('hello'))
     return render_template('register.html', wrong_passwords=False)
+
 
 @app.route('/user/<user_id>')
 def single_user_page(user_id):
@@ -262,6 +269,7 @@ def single_user_page(user_id):
     comment = data_manager.get_user_comment(user_id)
     question = data_manager.get_user_question(user_id)
     return render_template('user_page.html', user=user, answer=answer, comment=comment, question=question)
+
 
 @app.route('/bonusquestions')
 def bonus_question():
