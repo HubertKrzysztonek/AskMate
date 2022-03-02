@@ -9,6 +9,8 @@
 <h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
 <div class="logo_line"></div>
 {#<h5>question:</h5>#}
+{{ session[username] }}<br>
+{{ user.username }}
 <h1>{{ question.title }}</h1>
 <h2>{{ question.message }}</h2>
 {% for ele in tags %}
@@ -61,6 +63,9 @@
     <label for="collapsible{{ elem.id }}" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
        {%  for com in comment %}
         {% if com.answer_id == elem.id %}
+            {% if sesion[username] == user.username %}
+                <h1>TAK</h1>
+                {% endif %}
     <p3 align="right">Comment: {{  com.message }}</p3><br>
     <p3 align="right" style="font-size: 12px">Added time: {{ com.submission_time }} </p3><br>
     <p3 align="right" style="font-size: 12px">Edit time: {{ com.edited_count }}</p3><br>

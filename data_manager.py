@@ -184,14 +184,14 @@ def sorting_main_page(cursor, sort_by, sort):
 
 
 @database_common.connection_handler
-def add_new_question(cursor, sub_time, title, message, image):
+def add_new_question(cursor, sub_time, title, message, image, user_id):
     query = """
             INSERT INTO question
-            (submission_time, view_number, vote_number, title, message, image)
-            VALUES (%s,0,0,%s,%s,%s)
+            (submission_time, view_number, vote_number, title, message, image, user_id)
+            VALUES (%s,0,0,%s,%s,%s,%s)
             returning id
     """
-    cursor.execute(query, (sub_time, title, message, image))
+    cursor.execute(query, (sub_time, title, message, image, user_id))
     return cursor.fetchone()['id']
 
 
@@ -499,3 +499,32 @@ def lost_user_reputation(cursor, user_id):
     WHERE id = %s
     """
     cursor.execute(query, [user_id])
+
+@database_common.connection_handler
+def get_user(cursor, user_id):
+    query = """
+    SELECT *
+    FROM users
+    where id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchone()
+
+@database_common.connection_handler
+def get_user_username(cursor, username):
+    query = """
+    SELECT *
+    FROM users
+    where username = %s
+    """
+    cursor.execute(query, [username])
+    return cursor.fetchone()
+
+@database_common.connection_handler
+def update_user_question(cursor, user_id, value):
+    query = """
+    UPDATE users 
+    SET asked_questions = asked_questions + %s
+    WHERE id = %s
+    """
+    cursor.execute(query, (value, user_id))
