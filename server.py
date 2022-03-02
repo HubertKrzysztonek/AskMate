@@ -44,7 +44,7 @@ def display_question(question_id):
     answer = data_manager.read_answer(question_id)
     comment = data_manager.read_comment_question(question_id)
     tags = id_to_tags(question_id)
-    print(tags)
+    user =
     return render_template('display_question.html', question=question, answer=answer, comment=comment, tags=tags)
 
 
@@ -252,8 +252,7 @@ def id_to_tags(question_id):
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
-        if data_manager.check_password(password=request.form['password'],
-                                       repeat_password=request.form['repeat_password']) != True:
+        if data_manager.check_password(password=request.form['password'],repeat_password=request.form['repeat_password']) != True:
             wrong_passwords = True
             return (render_template('register.html', wrong_passwords=wrong_passwords))
 
