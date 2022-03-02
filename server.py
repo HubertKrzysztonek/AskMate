@@ -83,8 +83,9 @@ def add_question_post():
     else:
         image.filename = None
     sub_tim = str(datetime.datetime.now())
-    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'], message=request.form['message'],
-                                         image=image.filename)
+    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'],
+                                           message=request.form['message'],
+                                           image=image.filename)
     return redirect(f'/question/{new_id}')
 
 
@@ -135,24 +136,32 @@ def answer_delete(answer_id):
 @app.route("/question/<question_id>/vote_up")
 def question_vote_up(question_id):
     data_manager.vote_up(question_id)
+    question = data_manager.read_question(question_id=question_id)
+    data_manager.update_user_reputation(user_id=question['user_id'], value=5)
     return redirect("/list")
 
 
 @app.route("/question/<question_id>/vote_down")
 def question_vote_down(question_id):
     data_manager.vote_down(question_id)
+    question = data_manager.read_question(question_id=question_id)
+    data_manager.lost_user_reputation(user_id=question['user_id'])
     return redirect("/list")
 
 
 @app.route("/answer/<answer_id>/vote_up")
 def answer_vote_up(answer_id):
     data_manager.vote_up_answer(answer_id)
+    answer = data_manager.read_answer_answer_id(answer_id=answer_id)
+    data_manager.update_user_reputation(user_id=answer['user_id'], value=10)
     return redirect(request.referrer)
 
 
 @app.route("/answer/<answer_id>/vote_down")
 def answer_vote_down(answer_id):
     data_manager.vote_down_answer(answer_id)
+    answer = data_manager.read_answer_answer_id(answer_id=answer_id)
+    data_manager.lost_user_reputation(user_id=answer['user_id'])
     return redirect(request.referrer)
 
 
@@ -275,6 +284,11 @@ def single_user_page(user_id):
     comment = data_manager.get_user_comment(user_id)
     question = data_manager.get_user_question(user_id)
     return render_template('user_page.html', user=user, answer=answer, comment=comment, question=question)
+
+
+@app.route('/bonusquestions')
+def bonus_question():
+    return render_template('bonus_questions.html')
 
 
 if __name__ == "__main__":

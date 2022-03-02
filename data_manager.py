@@ -1,10 +1,7 @@
 import database_common
 import bcrypt
-from csv import writer
-from operator import itemgetter
-from psycopg2 import sql
-from psycopg2.extras import RealDictCursor
-from typing import List, Dict
+
+import database_common
 
 
 @database_common.connection_handler
@@ -385,6 +382,29 @@ def get_user_question(cursor, user_id):
     cursor.execute(query, [user_id])
     return cursor.fetchall()
 
+
+@database_common.connection_handler
+def get_user_answer(cursor, user_id):
+    query = """
+        SELECT *
+        FROM answer
+        WHERE user_id= %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_user_comment(cursor, user_id):
+    query = """
+        SELECT *
+        FROM comment
+        WHERE user_id= %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchall()
+
+
 @database_common.connection_handler
 def get_all_tags(cursor):
     query = """
@@ -460,3 +480,22 @@ def check_login (cursor, username, password):
             return False
     else:
         return False
+
+
+@database_common.connection_handler
+def update_user_reputation(cursor, user_id, value):
+    query = """
+    UPDATE users 
+    SET reputation = reputation + %s
+    WHERE id = %s
+    """
+    cursor.execute(query, (value, user_id))
+
+@database_common.connection_handler
+def lost_user_reputation(cursor, user_id):
+    query = """
+    UPDATE users 
+    SET reputation = reputation - 2
+    WHERE id = %s
+    """
+    cursor.execute(query, [user_id])
