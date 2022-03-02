@@ -11,9 +11,7 @@
 <br>
 <script type="text/javascript">
     function same_password() {
-        console.log ('funkcja wchodzi')
         var wrong_passwords = {{wrong_passwords|tojson}}
-        console.log (wrong_passwords)
 
         if (wrong_passwords) {
             alert('There are not the same passwords');
@@ -24,7 +22,7 @@
     <br>
         <h1>Sign up</h1>
         <br>
-            <form action="/register/" method="post" enctype="multipart/form-data">
+            <form action="/registration" method="post" enctype="multipart/form-data">
                 Username <input type="text" name="username"/><br/>
                 Create password: <input type="password" name="password"/><br/>
                 Repeat password: <input type="password" name="repeat_password"/><br/>

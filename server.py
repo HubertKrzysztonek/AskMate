@@ -1,11 +1,11 @@
-import datetime
-import os
+from flask import Flask, make_response, render_template, redirect, request, url_for, sessions, session
+import data_manager, os, datetime
+from os import urandom
 
-from flask import Flask, render_template, redirect, request, url_for
 
-import data_manager
-
+SESSION_USERNAME = 'username'
 app = Flask(__name__)
+app.secret_key = urandom(15)
 app.config["IMAGE_UPLOADS"] = 'static/images'
 
 
@@ -14,7 +14,13 @@ def hello():
     sort = 'DESC'
     sort_by = 'submission_time'
     all_list_sorted = data_manager.sorting_main_page(sort_by, sort)
-    return render_template("index.html", last_questions=all_list_sorted)
+    response = make_response(render_template("index.html", last_questions=all_list_sorted, username = SESSION_USERNAME))
+    return response
+
+@app.route("/logout", methods=['GET'])
+def logout ():
+    session.pop (SESSION_USERNAME)
+    return redirect(url_for('hello'))
 
 
 @app.route(f"/search", methods=['GET', 'POST'])
@@ -197,7 +203,6 @@ def add_tag(question_id):
     tags = id_to_tags(question_id)
     return render_template('addtag.html', tags=tags, question_id=question_id)
 
-
 @app.route('/del-tag/<question_id>/<tag>')
 def del_tag_from_queestion(question_id, tag):
     tag_id = data_manager.get_id_by_tag_name(tag)
@@ -248,18 +253,29 @@ def id_to_tags(question_id):
             tags = all_tags_name
         return tags
 
-
-@app.route('/register/', methods=['GET', 'POST'])
+@app.route('/registration', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
-        if data_manager.check_password(password=request.form['password'],repeat_password=request.form['repeat_password']) != True:
+        if data_manager.check_password (password = request.form['password'], repeat_password =request.form['repeat_password']) != True:
             wrong_passwords = True
-            return (render_template('register.html', wrong_passwords=wrong_passwords))
+            return (render_template('register.html', wrong_passwords=wrong_passwords ))
 
-        if data_manager.check_new_user(user=request.form['username'], password=request.form['password']):
+        if data_manager.check_new_user (user = request.form['username'] , password = request.form['password']):
             return redirect(url_for('hello'))
     return render_template('register.html', wrong_passwords=False)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login ():
+    if request.method == "POST":
+        if data_manager.check_login (username = request.form['username'] , password = request.form['password']):
+            user = request.form['username']
+            session[SESSION_USERNAME] = user
+
+            return redirect(url_for('hello'))
+        else:
+            wrong_login = True
+            return (render_template('login.html', wrong_login=wrong_login))
+    return render_template('login.html',wrong_login=False)
 
 @app.route('/user/<user_id>')
 def single_user_page(user_id):
