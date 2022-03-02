@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tags</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+</head>
+<body>
+{% for ele in all_tags %}
+<div style="margin-left: 100px; margin-right: 500px" class="wrap-collabsible">
+    <label for="collapsible{{ ele }}" class="lbl-toggle">#{{ ele }} - {{ dict[ele] }}</label><div class="collapsible-content"><div class="content-inner">
+
+</div></div></div>
+{% endfor %}
+
+</body>
+</html>
