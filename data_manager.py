@@ -319,6 +319,15 @@ def get_all_tags_id_from_question(cursor, question_id):
     cursor.execute(query, [question_id])
     return cursor.fetchall()
 
+@database_common.connection_handler
+def get_all_questions_id_by_tag_id(cursor, tag_id):
+    query = """
+                   SELECT question_id
+                    FROM question_tag
+                    WHERE tag_id = %s
+               """
+    cursor.execute(query, [tag_id])
+    return cursor.fetchall()
 
 @database_common.connection_handler
 def save_new_tag(cursor, newtag):
