@@ -42,7 +42,10 @@
         {% endif %}
     {% endfor %}
 </div></div></div><br><br>
+{% if answer%}
 <h3 style="color: #f4e603; margin-left: 100px">Answers:</h3>
+{% else%}
+{% endif %}
 <h3>{% for elem in answer %}
     <div class="vl"></div>
     <p4>Votes: {{elem.vote_number}}</p4><br>

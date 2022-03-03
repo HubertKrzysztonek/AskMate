@@ -1,7 +1,7 @@
-import database_common
 import bcrypt
-import psycopg2
 import database_common
+import database_common
+import psycopg2
 
 
 @database_common.connection_handler
@@ -128,9 +128,6 @@ def search_results_answers(cursor, text):
     return results
 
 
-print(search_results_answers('abc'))
-
-
 @database_common.connection_handler
 def vote_up(cursor, question_id):
     query = """
@@ -149,7 +146,6 @@ def vote_down(cursor, question_id):
 
 @database_common.connection_handler
 def vote_up_answer(cursor, answer_id):
-    # print(answer_id)
     query = """
             UPDATE answer SET vote_number = vote_number +1 WHERE id = %s;
     """
@@ -321,6 +317,7 @@ def get_all_tags_id_from_question(cursor, question_id):
     cursor.execute(query, [question_id])
     return cursor.fetchall()
 
+
 @database_common.connection_handler
 def get_all_questions_id_by_tag_id(cursor, tag_id):
     query = """
@@ -331,6 +328,7 @@ def get_all_questions_id_by_tag_id(cursor, tag_id):
     cursor.execute(query, [tag_id])
     return cursor.fetchall()
 
+
 @database_common.connection_handler
 def save_new_tag(cursor, newtag):
     query = """
@@ -340,12 +338,14 @@ def save_new_tag(cursor, newtag):
     """
     cursor.execute(query, [newtag])
 
+
 @database_common.connection_handler
 def del_tag_from_question(cursor, questid, tagid):
     query = """
             DELETE FROM question_tag WHERE question_id = %s AND tag_id = %s;
              """
     cursor.execute(query, [questid, tagid])
+
 
 @database_common.connection_handler
 def get_user_data(cursor, user_id):
@@ -356,6 +356,7 @@ def get_user_data(cursor, user_id):
     """
     cursor.execute(query, [user_id])
     return cursor.fetchone()
+
 
 @database_common.connection_handler
 def check_new_user(cursor, user, password):
@@ -369,17 +370,19 @@ def check_new_user(cursor, user, password):
     cursor.execute(query, [user])
     users = cursor.fetchall()
     if users == []:
-            query = """
+        query = """
                 INSERT INTO users
                 (username, password, registration, asked_questions, answers, comments, reputation, image) 
                 VALUES (%s,%s,current_timestamp,0,0,0,0, 'null')
             """
-            cursor.execute(query, [user, hashed_psw])
-            return True
+        cursor.execute(query, [user, hashed_psw])
+        return True
     else:
         return False
 
-check_new_user ('dragonpl','123456')
+
+check_new_user('dragonpl', '123456')
+
 
 @database_common.connection_handler
 def get_user_question(cursor, user_id):
@@ -401,6 +404,7 @@ def get_user_answer(cursor, user_id):
     """
     cursor.execute(query, [user_id])
     return cursor.fetchall()
+
 
 @database_common.connection_handler
 def users(cursor):
@@ -449,10 +453,10 @@ def code(password):
     hashed_psw = bcrypt.hashpw(password, bcrypt.gensalt())
     return hashed_psw.decode('utf-8')
 
+
 @database_common.connection_handler
 def check_new_user(cursor, user, password):
     password = code(password)
-    print (password)
     query = """
     SELECT * 
     FROM users
@@ -461,17 +465,18 @@ def check_new_user(cursor, user, password):
     cursor.execute(query, [user])
     users = cursor.fetchall()
     if users == []:
-            query = """
+        query = """
                 INSERT INTO users
                 (username, password, registration, asked_questions, answers, comments, reputation, image) 
                 VALUES (%s,%s,current_timestamp,0,0,0,0, 'null')
             """
-            cursor.execute(query, (user, password))
-            return True
+        cursor.execute(query, (user, password))
+        return True
     else:
         return False
 
-def check_password (password, repeat_password):
+
+def check_password(password, repeat_password):
     if password != repeat_password:
         return False
     else:
@@ -483,7 +488,7 @@ class BCryptHelper:
 
 
 @database_common.connection_handler
-def check_login (cursor, username, password):
+def check_login(cursor, username, password):
     query = """
         SELECT password
         FROM users
@@ -509,6 +514,7 @@ def update_user_reputation(cursor, user_id, value):
     """
     cursor.execute(query, (value, user_id))
 
+
 @database_common.connection_handler
 def lost_user_reputation(cursor, user_id):
     query = """
@@ -517,6 +523,7 @@ def lost_user_reputation(cursor, user_id):
     WHERE id = %s
     """
     cursor.execute(query, [user_id])
+
 
 @database_common.connection_handler
 def get_user(cursor, user_id):
@@ -528,6 +535,7 @@ def get_user(cursor, user_id):
     cursor.execute(query, [user_id])
     return cursor.fetchone()
 
+
 @database_common.connection_handler
 def get_user_id(cursor, user_id):
     query = """
@@ -537,6 +545,7 @@ def get_user_id(cursor, user_id):
     """
     cursor.execute(query, [user_id])
     return cursor.fetchone()
+
 
 @database_common.connection_handler
 def get_user_username(cursor, username):
@@ -548,6 +557,7 @@ def get_user_username(cursor, username):
     cursor.execute(query, [username])
     return cursor.fetchone()
 
+
 @database_common.connection_handler
 def update_user_question(cursor, user_id, value):
     query = """
@@ -556,6 +566,7 @@ def update_user_question(cursor, user_id, value):
     WHERE id = %s
     """
     cursor.execute(query, (value, user_id))
+
 
 @database_common.connection_handler
 def get_user_id_by_username(cursor, username):
@@ -566,8 +577,10 @@ def get_user_id_by_username(cursor, username):
         """
     cursor.execute(query, [username])
     return cursor.fetchone()
+
+
 @database_common.connection_handler
-def update_answer_accept(cursor,answer_id):
+def update_answer_accept(cursor, answer_id):
     query = """
     UPDATE answer
     SET accepted=True

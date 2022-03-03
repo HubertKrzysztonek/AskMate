@@ -184,7 +184,6 @@ def new_commet(question_id):
         return render_template('add_comment.html', question=data_manager.read_question(question_id), field='question')
     if request.method == "POST":
         user_id = data_manager.get_user_id_by_username(session[SESSION_USERNAME])
-        print(f'to jest user id do komenta {user_id}')
         data_manager.add_comment_to_question(question_id=question_id, message=request.form['message'], userid=user_id['id'])
         return redirect(url_for('display_question', question_id=question_id))
 
@@ -214,7 +213,6 @@ def comment_answer(answer_id):
 
 @app.route('/question/<question_id>/new-tag', methods=['GET'])
 def add_tag(question_id):
-    print(question_id)
     tags = id_to_tags(question_id)
     return render_template('addtag.html', tags=tags, question_id=question_id)
 
@@ -227,8 +225,6 @@ def new_tag(question_id):
     tags = data_manager.get_all_tags()
     for tag in tags:
         all_tag.append(tag['name'])
-    print(f'to jest all tag {all_tag}')
-    print(f'New tag {newtag}')
     if newtag not in all_tag:
         data_manager.save_new_tag(newtag)
         new_id = data_manager.get_id_by_tag_name(newtag)
