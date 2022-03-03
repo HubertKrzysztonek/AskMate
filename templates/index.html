@@ -9,7 +9,7 @@
 <h4 style="color:yellow">< just_ask ></h4>
 {%  if session[username] %}
     <p1 style="color: lightgoldenrodyellow;margin-left:75%">Hello {{ session[username]}}!</p1><br>
-<p5><a style="color: lightyellow;margin-left:75% " href="/user/1">profile | </a></p5><p5><a style="color: lightyellow" href="/logout"> log out </a></p5><br><br>
+<p5><a style="color: lightyellow;margin-left:75% " href="/user/{{ user.id }}">profile | </a></p5><p5><a style="color: lightyellow" href="/logout"> log out </a></p5><br><br>
 {%  else %}
 <p5><a style="color: lightyellow; margin-left:75%" href="/login"> login |</a></p5><p5><a style="color: lightyellow" href="/registration"> sign up </a></p5><br><br>
 

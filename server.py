@@ -14,10 +14,14 @@ def hello():
     sort = 'DESC'
     sort_by = 'submission_time'
     all_list_sorted = data_manager.sorting_main_page(sort_by, sort)
-    if session[SESSION_USERNAME]:
-        data_manager.get
-    response = make_response(render_template("index.html", last_questions=all_list_sorted, username = SESSION_USERNAME))
-    return response
+    if session:
+        user = data_manager.get_user_username(username=session[SESSION_USERNAME])
+        response = make_response(
+            render_template("index.html", last_questions=all_list_sorted, username=SESSION_USERNAME, user=user))
+        return response
+    else:
+        response = make_response(render_template("index.html", last_questions=all_list_sorted, username=SESSION_USERNAME))
+        return response
 
 @app.route("/logout", methods=['GET'])
 def logout ():
@@ -108,7 +112,7 @@ def question_new_answer(question_id):
             image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
             data_manager.save_new_answer(question_id, answer, image.filename, userid=user_id['id'])
             return redirect(url_for('display_question', question_id=question_id))
-    return render_template('post_answer.html', question=question, username = SESSION_USERNAME, answer=answer)
+    return render_template('post_answer.html', question=question, username=SESSION_USERNAME, answer=answer)
 
 @app.route("/users", methods=['GET'])
 def users ():
@@ -294,17 +298,16 @@ def register():
     return render_template('register.html', wrong_passwords=False)
 
 @app.route('/login', methods=['GET', 'POST'])
-def login ():
+def login():
     if request.method == "POST":
-        if data_manager.check_login (username = request.form['username'] , password = request.form['password']):
+        if data_manager.check_login(username=request.form['username'], password=request.form['password']):
             user = request.form['username']
             session[SESSION_USERNAME] = user
-
             return redirect(url_for('hello'))
         else:
             wrong_login = True
             return (render_template('login.html', wrong_login=wrong_login))
-    return render_template('login.html',wrong_login=False)
+    return render_template('login.html', wrong_login=False)
 
 @app.route('/user/<user_id>')
 def single_user_page(user_id):
@@ -313,6 +316,14 @@ def single_user_page(user_id):
     comment = data_manager.get_user_comment(user_id)
     question = data_manager.get_user_question(user_id)
     return render_template('user_page.html', user=user, answer=answer, comment=comment, question=question)
+
+
+@app.route('/accept/<answer_id>')
+def accept_answer(answer_id):
+    answer = data_manager.read_one_answer(answer_id)
+    data_manager.update_answer_accept(answer_id=answer_id)
+    data_manager.update_user_reputation(user_id=answer['user_id'], value=15)
+    return redirect(f'/question/{answer["question_id"]}')
 
 
 @app.route('/bonusquestions')

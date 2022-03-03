@@ -46,7 +46,17 @@
 <h3>{% for elem in answer %}
     <div class="vl"></div>
     <p4>Votes: {{elem.vote_number}}</p4><br>
+    {% if elem.accepted == False %}
     <p3>{{elem.message}}</p3><br>
+    {% elif elem.accepted == True %}
+    <p3 style="background-color: yellow;color: black">{{elem.message}}</p3><br>
+    {% endif %}
+    {% if session[username] == user.username %}
+        {% if elem.accepted == False %}
+            <button class="button-32" role="button">
+            <a href="/accept/{{ elem.id }}">Accept</a></button>
+    {% endif %}
+    {% endif %}
     <br>
     <button class="button-32" role="button">
     <a href="http://127.0.0.1:5000/answer/{{elem.id}}/vote_up">Vote up</a></button>
