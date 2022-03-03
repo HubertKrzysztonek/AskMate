@@ -14,6 +14,8 @@ def hello():
     sort = 'DESC'
     sort_by = 'submission_time'
     all_list_sorted = data_manager.sorting_main_page(sort_by, sort)
+    if session[SESSION_USERNAME]:
+        data_manager.get
     response = make_response(render_template("index.html", last_questions=all_list_sorted, username = SESSION_USERNAME))
     return response
 

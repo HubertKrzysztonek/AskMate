@@ -529,6 +529,16 @@ def get_user(cursor, user_id):
     return cursor.fetchone()
 
 @database_common.connection_handler
+def get_user_id(cursor, user_id):
+    query = """
+    SELECT ID
+    FROM users
+    where id = %s
+    """
+    cursor.execute(query, [user_id])
+    return cursor.fetchone()
+
+@database_common.connection_handler
 def get_user_username(cursor, username):
     query = """
     SELECT *
