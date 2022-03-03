@@ -97,15 +97,16 @@ def question_new_answer(question_id):
     question = data_manager.read_question(question_id)
     answer = data_manager.read_answer(question_id)
     if request.method == 'POST':
+        user_id = data_manager.get_user_id_by_username(session[SESSION_USERNAME])
         image = request.files['file']
         answer = request.form['answer']
         if image.filename == '':
-            data_manager.save_new_answer(question_id, answer, None)
+            data_manager.save_new_answer(question_id, answer, None, userid=user_id['id'])
             return redirect(url_for('display_question', question_id=question_id))
         else:
             base_dir = os.path.abspath(os.path.dirname(__file__))
             image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
-            data_manager.save_new_answer(question_id, answer, image.filename)
+            data_manager.save_new_answer(question_id, answer, image.filename, userid=user_id['id'])
             return redirect(url_for('display_question', question_id=question_id))
     return render_template('post_answer.html', question=question, username=SESSION_USERNAME, answer=answer)
 
@@ -179,7 +180,9 @@ def new_commet(question_id):
     if request.method == "GET":
         return render_template('add_comment.html', question=data_manager.read_question(question_id), field='question')
     if request.method == "POST":
-        data_manager.add_comment_to_question(question_id=question_id, message=request.form['message'])
+        user_id = data_manager.get_user_id_by_username(session[SESSION_USERNAME])
+        print(f'to jest user id do komenta {user_id}')
+        data_manager.add_comment_to_question(question_id=question_id, message=request.form['message'], userid=user_id['id'])
         return redirect(url_for('display_question', question_id=question_id))
 
 

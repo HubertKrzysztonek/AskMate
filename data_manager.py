@@ -81,12 +81,12 @@ def delete_question(cursor, question_id):
 
 
 @database_common.connection_handler
-def save_new_answer(cursor, question_id, message, image):
+def save_new_answer(cursor, question_id, message, image, userid):
     query = """
-    INSERT INTO answer (submission_time, vote_number, message, question_id, image, accepted)
-    VALUES (current_timestamp, 0, %s, %s, %s, False);"""
+    INSERT INTO answer (submission_time, vote_number, message, question_id, image, user_id, accepted)
+    VALUES (current_timestamp, 0, %s, %s, %s, %s, False);"""
 
-    cursor.execute(query, (message, question_id, image))
+    cursor.execute(query, (message, question_id, image, userid))
 
 
 @database_common.connection_handler
@@ -228,13 +228,13 @@ def read_comment_question(cursor, question_id):
 
 
 @database_common.connection_handler
-def add_comment_to_question(cursor, question_id, message):
+def add_comment_to_question(cursor, question_id, message, userid):
     query = """
         INSERT INTO comment
-        (question_id, message, submission_time, edited_count) 
-        VALUES (%s,%s,current_timestamp,0)
+        (question_id, message, submission_time, edited_count, user_id) 
+        VALUES (%s,%s,current_timestamp,0,%s)
     """
-    cursor.execute(query, [question_id, message])
+    cursor.execute(query, [question_id, message, userid])
 
 
 @database_common.connection_handler
@@ -547,6 +547,15 @@ def update_user_question(cursor, user_id, value):
     """
     cursor.execute(query, (value, user_id))
 
+@database_common.connection_handler
+def get_user_id_by_username(cursor, username):
+    query = """
+        SELECT id
+        FROM users
+        where username = %s
+        """
+    cursor.execute(query, [username])
+    return cursor.fetchone()
 @database_common.connection_handler
 def update_answer_accept(cursor,answer_id):
     query = """
