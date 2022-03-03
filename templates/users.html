@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
+    <h4><a style="color: yellow" href="/"> < just_ask > </a></h4>
+</head>
+<body>
+<div class="logo_line"></div>
+
+<table class="vitamins">
+	<thead>
+		<tr>
+			<th><h2>Username</h2></th>
+			<th><h2>Registration date</h2></th>
+			<th><h2>Questions</h2></th>
+			<th><h2>Answers</h2></th>
+            <th><h2>Comments</h2></th>
+			<th><h2>Reputation</h2></th>
+		</tr>
+        <tbody>
+        {% for elem in users %}
+    		<tr>
+			<td><p3 style="font-size: 15px; margin: auto">{{elem['username']}}</p3></td>
+			<td><p3>{{elem['registration']}}</p3></td>
+			<td><p3>{{elem['asked_questions']}}</p3></td>
+                <td><p3>{{elem['answers']}}</p3></td>
+                <td><p3>{{elem['comments']}}</p3></td>
+                <td><p3>{{elem['reputation']}}</p3></td>
+            </tr>
+			{% endfor %}
+        </tbody>
+	</thead>
+</table>

@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
 </head>
 <body>
-<h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
+<h4><a style="color: yellow" href="/"> < just_ask > </a></h4>
 <div class="logo_line"></div>
 <br>
 <script type="text/javascript">
@@ -20,17 +20,16 @@
     same_password();
 </script>
     <br>
-        <h1>Sign up</h1>
         <br>
             <form action="/registration" method="post" enctype="multipart/form-data">
-                Username <input type="text" name="username"/><br/>
-                Create password: <input type="password" name="password"/><br/>
-                Repeat password: <input type="password" name="repeat_password"/><br/>
-                <p3>Add profile photo</p3>
-                <br><br>
-                    <input style="margin-left: 100px" type="file" name="file">
-                        <button class="button-32" role="button" style="margin-left: 100px" type="submit"
-                                value="Submit">Submit
+                <p3 style="margin-left: 40%">Username:</p3>  <input type="text" name="username"/><br/>
+                <p3 style="margin-left: 40%">Create password:</p3>  <input type="password" name="password"/><br/>
+                <p3 style="margin-left: 40%">Repeat password:</p3>  <input type="password" name="repeat_password"/><br/><br/>
+                <h2 style="margin-left: 40%">Add profile photo</h2>
+
+                    <input style="margin-left: 40%" type="file" name="file" >
+                        <button class="button-32" role="button" style="margin-left: 20px" type="submit"
+                                value="Submit">Sign up
                         </button>
                         <br>
             </form>

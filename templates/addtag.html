@@ -9,7 +9,7 @@
 {% if tags == 'Notags' %}
     <p>There is no tags!</p>
 {% else %}
-    <p>Acual tags:</p>
+    <p>Actual tags:</p>
     {% for tag in tags %}
         <p>{{ tag }} - <a href="/del-tag/{{ question_id }}/{{ tag }}">X</a></p>
     {% endfor %}

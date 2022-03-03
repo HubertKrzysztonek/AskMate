@@ -1,5 +1,8 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+@import "compass/css3";
 body {
-    background-color: #1B1A1A;
+    background-color: #151515;
     font-family: "Consolas", sans-serif;
     font-size: 20px;
     color: grey;
@@ -18,7 +21,7 @@ a:visited {
 }
 
 h1 {
-    font-family: sans-serif;
+    font-family: "Consolas", sans-serif;
     font-size: 25px;
     margin-left: 100px;
     margin-right: 500px;
@@ -64,8 +67,7 @@ h1 {
 
 h2 {
     font-size: 15px;
-    margin-left: 100px;
-    margin-right: 500px;
+    margin-left: 0px;
     margin-top: 10px;
     margin-bottom: 10px;
     color: lightgoldenrodyellow;
@@ -78,7 +80,8 @@ h4 {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: dodgerblue;
+    color: gold;
+    font-family: "Consolas", sans-serif;
 }
 
 h5 {
@@ -95,7 +98,7 @@ p {
     margin-left: 100px;
     margin-right: 500px;
     margin-top: 20px;
-
+    font-family: "Consolas", sans-serif;
     color: lightgoldenrodyellow;
 }
 
@@ -103,6 +106,11 @@ p2 {
     font-size: 20px;
     color: dodgerblue;
     margin-left: 100px;
+}
+
+p5 {
+    font-size: 15px;
+    color: dodgerblue;
 }
 
 p3 {
@@ -118,12 +126,13 @@ p4 {
 }
 
 a {
-    font-family: Consolas;
+    font-family: "Consolas", sans-serif;
     color: black;
 }
 
 /* CSS */
 .button-32 {
+    font-family: "Consolas", sans-serif;
     background-color: dodgerblue;
     border-radius: 12px;
     color: #000;
@@ -145,16 +154,19 @@ a {
 .button-32:not(:disabled):hover,
 .button-32:not(:disabled):focus {
     outline: 0;
+    font-family: "Consolas", sans-serif;
     background: #f4e603;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
 }
 
 .button-32:disabled {
+    font-family: "Consolas", sans-serif;
     filter: saturate(0.2) opacity(0.5);
     cursor: not-allowed;
 }
 
 .button-66 {
+    font-family: "Consolas", sans-serif;
     background-color: lightgoldenrodyellow;
     border-radius: 12px;
     color: #000;
@@ -171,21 +183,25 @@ a {
     -webkit-user-select: none;
     touch-action: manipulation;
     margin-left: 100px;
+
 }
 
 .button-66:not(:disabled):hover,
 .button-66:not(:disabled):focus {
     outline: 0;
+    font-family: "Consolas", sans-serif;
     background: lightblue;
     box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
 }
 
 .button-66:disabled {
+    font-family: "Consolas", sans-serif;
     filter: saturate(0.2) opacity(0.5);
     cursor: not-allowed;
 }
 
 textarea, title {
+    font-family: "Consolas", sans-serif;
     width: 40%;
     height: 100px;
     padding: 12px 20px;
@@ -210,6 +226,7 @@ textarea, title {
     text-align: left;
     outline: none;
     font-size: 15px;
+    font-family: "Consolas", sans-serif;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -223,6 +240,7 @@ textarea, title {
     display: none;
     overflow: hidden;
     background-color: #f1f1f1;
+    font-family: "Consolas", sans-serif;
 }
 
 input[type='checkbox'] {
@@ -236,7 +254,7 @@ input[type='checkbox'] {
 .lbl-toggle {
     display: block;
     font-weight: bold;
-    font-family: monospace;
+    font-family: "Consolas", sans-serif;
     font-size: 1.2rem;
     text-transform: uppercase;
     text-align: center;
@@ -246,6 +264,7 @@ input[type='checkbox'] {
     cursor: pointer;
     border-radius: 7px;
     transition: all 0.25s ease-out;
+    font-family: "Consolas", sans-serif;
 }
 
 .lbl-toggle:hover {
@@ -262,6 +281,7 @@ input[type='checkbox'] {
     margin-right: .7rem;
     transform: translateY(-2px);
     transition: transform .2s ease-out;
+    font-family: "Consolas", sans-serif;
 }
 
 .toggle:checked + .lbl-toggle::before {
@@ -293,4 +313,312 @@ input[type='checkbox'] {
 
 .collapsible-content p {
     margin-bottom: 0;
+}
+
+
+
+
+
+h5 {
+    font-family: "Consolas", sans-serif;
+  font-size:15px;
+  font-weight: 300;
+  line-height:1em;
+  text-align: center;
+  color: #4DC3FA;
+}
+
+h6 {
+    font-family: "Consolas", sans-serif;
+  font-size:15px;
+  font-weight: 300;
+  text-align: center;
+  display: block;
+  line-height:1em;
+  padding-bottom: 2em;
+  color: #FB667A;
+}
+
+h6 a {
+    font-family: "Consolas", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FB667A;
+  text-decoration: none;
+}
+
+.login-box {
+    font-family: "Consolas", sans-serif;
+    margin-top: 75px;
+    height: auto;
+    background: #1A2226;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.login-key {
+    font-family: "Consolas", sans-serif;
+    height: 100px;
+    font-size: 80px;
+    line-height: 100px;
+    background: -webkit-linear-gradient(#27EF9F, #0DB8DE);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-title {
+    font-family: "Consolas", sans-serif;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 30px;
+    letter-spacing: 2px;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #ECF0F5;
+}
+
+.login-form {
+    margin-top: 25px;
+    text-align: left;
+}
+
+input[type=text] {
+    font-family: "Consolas", sans-serif;
+    background-color: #1A2226;
+    border: none;
+    border-bottom: 2px solid #0DB8DE;
+    border-top: 0px;
+    border-radius: 0px;
+    font-weight: bold;
+    outline: 0;
+    margin-bottom: 20px;
+    padding-left: 0px;
+    color: #ECF0F5;
+}
+
+input[type=password] {
+    font-family: "Consolas", sans-serif;
+    background-color: #1A2226;
+    border: none;
+    border-bottom: 2px solid #0DB8DE;
+    border-top: 0px;
+    border-radius: 0px;
+    font-weight: bold;
+    outline: 0;
+    padding-left: 0px;
+    margin-bottom: 20px;
+    color: #ECF0F5;
+}
+
+.form-group {
+    margin-bottom: 40px;
+    outline: 0px;
+}
+
+.form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-bottom: 2px solid #0DB8DE;
+    outline: 0;
+    background-color: #1A2226;
+    color: #ECF0F5;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0;
+}
+
+label {
+    margin-bottom: 0px;
+}
+
+.form-control-label {
+    font-size: 10px;
+    color: #6C6C6C;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.btn-outline-primary {
+    border-color: #0DB8DE;
+    color: #0DB8DE;
+    border-radius: 0px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.btn-outline-primary:hover {
+    background-color: #0DB8DE;
+    right: 0px;
+}
+
+.login-btm {
+    float: left;
+}
+
+.login-button {
+    padding-right: 0px;
+    text-align: right;
+    margin-bottom: 25px;
+}
+
+.login-text {
+    text-align: left;
+    padding-left: 0px;
+    color: #A2A4A4;
+}
+
+.loginbttm {
+    padding: 0px;
+}
+
+header {
+    margin: 0;
+    background: #000;
+    height: 65px;
+    padding: 1px;
+}
+
+article {
+    margin: 40px 30px;
+}
+
+p8 {
+    font-family: 'Open Sans Condensed', sans-serif;
+    letter-spacing: 1px;
+    font-size: 2.3em;
+    line-height: 44px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 900;
+    margin: 0;
+    padding: 10px 0 0 30px;
+    letter-spacing: 2px;
+}
+
+p8 { margin: 20px 0 10px 0;
+    font-weight: 900;
+}
+
+p7 {
+    margin: 20px 0 5px 0;
+}
+
+
+/* Table Layout */
+
+table.vitamins {
+    margin: 20px 0 0 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: #212121;
+    color: #fff;
+}
+
+table.vitamins th, table.vitamins td {
+    text-align: center;
+}
+
+table.vitamins thead {
+    line-height: 12px;
+    background: #2e63e7;
+    text-transform: uppercase;
+}
+
+table.vitamins thead th {
+    color: #fff;
+    padding: 10px;
+    letter-spacing: 1px;
+    vertical-align: bottom;
+}
+
+table.vitamins thead th:nth-child(1) {
+    width: 20%;
+    text-align: left;
+    padding-left: 20px;
+}
+
+table.vitamins thead th:nth-child(2) {
+    width: 30%;
+}
+
+table.vitamins thead th:nth-child(3) {
+    width: 35%;
+}
+
+table.vitamins thead th:nth-child(4) {
+    width: 15%;
+}
+
+table.vitamins tbody {
+    font-size: 1em;
+    line-height: 15px;
+}
+
+table.vitamins tbody tr {
+    border-top: 2px solid rgba(109, 176, 231, 0.8);
+    transition: background 0.6s, color 0.6s;
+}
+
+table.vitamins tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+table.vitamins tbody tr:hover {
+    color: #000;
+    background: rgba(255, 255, 255, 0.7);
+    font-weight: 900;
+}
+
+table.vitamins tbody td {
+    padding: 12px;
+}
+
+table.vitamins tbody tr:hover td:first-child {
+    background: rgba(0,0,0,0);
+}
+
+table.vitamins tbody td:first-child {
+    text-align: left;
+    padding-left: 20px;
+    font-weight: 700;
+    background: rgba(109, 176, 231, 0.35);
+    transition: backgrounf 0.6s;
+}
+
+table.vitamins tfoot {
+    font-size: 0.8em;
+}
+
+table.vitamins tfoot tr {
+    border-top: 2px solid #2e63e7;
+}
+
+table.vitamins tfoot td {
+    color: rgba(255,255,215,0.6);
+    text-align: left;
+    line-height: 15px;
+    padding: 15px 20px;
+}
+
+
+/* Mobile Layout */
+
+@media screen and (max-width: 400px) {
+    p9 {
+        font-size: 34px;
+        line-height: 36px;
+        padding-left: 15px;
+    }
+
+    article {
+        margin: 10px 15px;
+    }
+
+    table.vitamins {
+        font-size: 0.8em;
+    }
 }

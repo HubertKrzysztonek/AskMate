@@ -50,8 +50,9 @@ def display_question(question_id):
     answer = data_manager.read_answer(question_id)
     comment = data_manager.read_comment_question(question_id)
     tags = id_to_tags(question_id)
-    print(tags)
-    return render_template('display_question.html', question=question, answer=answer, comment=comment, tags=tags)
+    user = data_manager.get_user(user_id=question['user_id'])
+    return render_template('display_question.html', question=question, answer=answer, comment=comment, tags=tags,
+                           user=user, username=SESSION_USERNAME)
 
 
 @app.route("/answer/<answer_id>/edit", methods=['POST', 'GET'])
@@ -69,22 +70,23 @@ def edit_answer(answer_id):
 
 @app.route("/add-question", methods=['GET'])
 def add_question_get():
-    return render_template("addquestion.html")
+    return render_template("addquestion.html",username = SESSION_USERNAME)
 
 
 @app.route("/add-question", methods=["POST"])
 def add_question_post():
-    sub_tim = str(datetime.datetime.now())
+    user = data_manager.get_user_username(session['username'])
     image = request.files['file']
-    print(f'to jest {image}')
     if image.filename != '':
         base_dir = os.path.abspath(os.path.dirname(__file__))
         image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
     else:
         image.filename = None
+    data_manager.update_user_question(value=1, user_id=user['id'])
     sub_tim = str(datetime.datetime.now())
-    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'], message=request.form['message'],
-                                         image=image.filename)
+    new_id = data_manager.add_new_question(sub_time=sub_tim, title=request.form['title'],
+                                           message=request.form['message'],
+                                           image=image.filename, user_id=user['id'])
     return redirect(f'/question/{new_id}')
 
 
@@ -103,7 +105,12 @@ def question_new_answer(question_id):
             image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
             data_manager.save_new_answer(question_id, answer, image.filename)
             return redirect(url_for('display_question', question_id=question_id))
-    return render_template('post_answer.html', question=question, answer=answer)
+    return render_template('post_answer.html', question=question, username = SESSION_USERNAME, answer=answer)
+
+@app.route("/users", methods=['GET'])
+def users ():
+    users = data_manager.users ()
+    return render_template('users.html', users=users)
 
 
 @app.route("/question/<question_id>/delete")
