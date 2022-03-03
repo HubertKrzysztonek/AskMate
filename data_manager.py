@@ -28,11 +28,11 @@ def read_all_question(cursor, question_id):
 
 @database_common.connection_handler
 def read_one_answer(cursor, answer_id):
-    query = f"""
+    query = """
     SELECT * FROM answer
-    WHERE id = (%s);
+    WHERE id = %s
     """
-    cursor.execute(query, (answer_id,))
+    cursor.execute(query, [answer_id])
     answer = cursor.fetchone()
     return answer
 
@@ -83,8 +83,8 @@ def delete_question(cursor, question_id):
 @database_common.connection_handler
 def save_new_answer(cursor, question_id, message, image):
     query = """
-    INSERT INTO answer (submission_time, vote_number, message, question_id, image)
-    VALUES (current_timestamp, 0, %s, %s, %s);"""
+    INSERT INTO answer (submission_time, vote_number, message, question_id, image, accepted)
+    VALUES (current_timestamp, 0, %s, %s, %s, False);"""
 
     cursor.execute(query, (message, question_id, image))
 
@@ -546,3 +546,12 @@ def update_user_question(cursor, user_id, value):
     WHERE id = %s
     """
     cursor.execute(query, (value, user_id))
+
+@database_common.connection_handler
+def update_answer_accept(cursor,answer_id):
+    query = """
+    UPDATE answer
+    SET accepted=True
+    where id=%s
+    """
+    cursor.execute(query, [answer_id])

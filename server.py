@@ -1,7 +1,8 @@
+import data_manager
+import datetime
+import os
 from flask import Flask, make_response, render_template, redirect, request, url_for, sessions, session
-import data_manager, os, datetime
 from os import urandom
-
 
 SESSION_USERNAME = 'username'
 app = Flask(__name__)
@@ -14,12 +15,13 @@ def hello():
     sort = 'DESC'
     sort_by = 'submission_time'
     all_list_sorted = data_manager.sorting_main_page(sort_by, sort)
-    response = make_response(render_template("index.html", last_questions=all_list_sorted, username = SESSION_USERNAME))
+    response = make_response(render_template("index.html", last_questions=all_list_sorted, username=SESSION_USERNAME))
     return response
 
+
 @app.route("/logout", methods=['GET'])
-def logout ():
-    session.pop (SESSION_USERNAME)
+def logout():
+    session.pop(SESSION_USERNAME)
     return redirect(url_for('hello'))
 
 
@@ -70,7 +72,7 @@ def edit_answer(answer_id):
 
 @app.route("/add-question", methods=['GET'])
 def add_question_get():
-    return render_template("addquestion.html",username = SESSION_USERNAME)
+    return render_template("addquestion.html", username=SESSION_USERNAME)
 
 
 @app.route("/add-question", methods=["POST"])
@@ -105,11 +107,12 @@ def question_new_answer(question_id):
             image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
             data_manager.save_new_answer(question_id, answer, image.filename)
             return redirect(url_for('display_question', question_id=question_id))
-    return render_template('post_answer.html', question=question, username = SESSION_USERNAME, answer=answer)
+    return render_template('post_answer.html', question=question, username=SESSION_USERNAME, answer=answer)
+
 
 @app.route("/users", methods=['GET'])
-def users ():
-    users = data_manager.users ()
+def users():
+    users = data_manager.users()
     return render_template('users.html', users=users)
 
 
@@ -256,7 +259,7 @@ def print_tags():
         all_quest_id = data_manager.get_all_questions_id_by_tag_id(tagid['id'])
         count = 0
         for ele in all_quest_id:
-             count +=1
+            count += 1
         full_db_sorted[tag] = count
     return render_template('tags.html', all_tags=list_of_tags, dict=full_db_sorted)
 
@@ -277,21 +280,24 @@ def id_to_tags(question_id):
             tags = all_tags_name
         return tags
 
+
 @app.route('/registration', methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
-        if data_manager.check_password (password = request.form['password'], repeat_password =request.form['repeat_password']) != True:
+        if data_manager.check_password(password=request.form['password'],
+                                       repeat_password=request.form['repeat_password']) != True:
             wrong_passwords = True
-            return (render_template('register.html', wrong_passwords=wrong_passwords ))
+            return (render_template('register.html', wrong_passwords=wrong_passwords))
 
-        if data_manager.check_new_user (user = request.form['username'] , password = request.form['password']):
+        if data_manager.check_new_user(user=request.form['username'], password=request.form['password']):
             return redirect(url_for('hello'))
     return render_template('register.html', wrong_passwords=False)
 
+
 @app.route('/login', methods=['GET', 'POST'])
-def login ():
+def login():
     if request.method == "POST":
-        if data_manager.check_login (username = request.form['username'] , password = request.form['password']):
+        if data_manager.check_login(username=request.form['username'], password=request.form['password']):
             user = request.form['username']
             session[SESSION_USERNAME] = user
 
@@ -299,7 +305,8 @@ def login ():
         else:
             wrong_login = True
             return (render_template('login.html', wrong_login=wrong_login))
-    return render_template('login.html',wrong_login=False)
+    return render_template('login.html', wrong_login=False)
+
 
 @app.route('/user/<user_id>')
 def single_user_page(user_id):
@@ -308,6 +315,14 @@ def single_user_page(user_id):
     comment = data_manager.get_user_comment(user_id)
     question = data_manager.get_user_question(user_id)
     return render_template('user_page.html', user=user, answer=answer, comment=comment, question=question)
+
+
+@app.route('/accept/<answer_id>')
+def accept_answer(answer_id):
+    answer = data_manager.read_one_answer(answer_id)
+    data_manager.update_answer_accept(answer_id=answer_id)
+    data_manager.update_user_reputation(user_id=answer['user_id'], value=15)
+    return redirect(f'/question/{answer["question_id"]}')
 
 
 @app.route('/bonusquestions')
