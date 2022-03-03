@@ -69,7 +69,7 @@ def edit_answer(answer_id):
 
 @app.route("/add-question", methods=['GET'])
 def add_question_get():
-    return render_template("addquestion.html")
+    return render_template("addquestion.html",username = SESSION_USERNAME)
 
 
 @app.route("/add-question", methods=["POST"])
@@ -104,7 +104,12 @@ def question_new_answer(question_id):
             image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
             data_manager.save_new_answer(question_id, answer, image.filename)
             return redirect(url_for('display_question', question_id=question_id))
-    return render_template('post_answer.html', question=question, answer=answer)
+    return render_template('post_answer.html', question=question, username = SESSION_USERNAME, answer=answer)
+
+@app.route("/users", methods=['GET'])
+def users ():
+    users = data_manager.users ()
+    return render_template('users.html', users=users)
 
 
 @app.route("/question/<question_id>/delete")

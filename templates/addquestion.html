@@ -12,6 +12,7 @@
 <br>
 <h1>NEW QUESTION</h1>
 <br>
+{%  if session[username] %}
 <form action="/add-question" method="post" enctype="multipart/form-data">
     <p3>Title</p3>
     <br><br>
@@ -24,6 +25,9 @@
     <input style="margin-left: 100px" type="file" name="file">
     <button class="button-32" role="button" style="margin-left: 100px" type="submit" value="Submit">Submit</button>
     <br>
+    {%  else %}
+    <p3>You must log in </p3>
+    {% endif %}
 </form>
 </body>
 </html>

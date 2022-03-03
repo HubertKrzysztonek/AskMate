@@ -6,24 +6,27 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
 </head>
 <body>
-<h4><a style="color: dodgerblue" href="/"> < just_ask > </a></h4>
+<h4><a style="color: yellow" href="/"> < just_ask > </a></h4>
 <div class="logo_line"></div>
 {#<h5>question:</h5>#}
-<h1>{{ question.title }}</h1>
-<h2>{{ question.message }}</h2>
+<h1 style="color: #eeeeee">{{ question.title }}</h1>
+<h2 style="margin-left: 100px">{{ question.message }}</h2>
+<p1 style="margin-left: 100px">
 {% for ele in tags %}
-<a href="">{{ ele }}</a>
+    </p1><a href=""><p5 style="">#{{ ele }}</p5></a>
 {% endfor %}
 {% if question.image == None %}
 {% else %}
     <img style="margin-left: 100px" alt="image" src="{{url_for('static', filename='images/' + question.image )}}" width="300" height="300"  >
 {% endif %}
 
-<form method="get" type="button" action="/question/{{ question.id }}/new-tag">
-   <button style="color: #eeeeee" class="button-32" role="button">
-       <p1>Add tag</p1> </button>
-</form>
-<button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 100px"><a href="/question/{{ question.id }}/new-comment">ADD COMMENT</a> </button>
+{#<form method="get" type="button" action="/question/{{ question.id }}/new-tag">#}
+{#   <button style="color: #eeeeee" class="button-32" role="button">#}
+{#       <p6>ADD TAG</p6> </button>#}
+{#</form>#}
+<br>
+<button class="button-32" role="button" style="color: #eeeeee; margin-left: 100px"><a href="/question/{{ question.id }}/new-tag">ADD TAG</a> </button>
+<button class="button-32" role="button" style="color: #eeeeee;margin-left: 0px"><a href="/question/{{ question.id }}/new-comment">ADD COMMENT</a> </button>
 <br>
 <div style="margin-left: 100px; margin-right: 500px" class="wrap-collabsible"> <input id="collapsible" class="toggle" type="checkbox">
     <label for="collapsible" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
@@ -36,7 +39,6 @@
         {% endif %}
     {% endfor %}
 </div></div></div>
-<button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 200px"><a href="http://127.0.0.1:5000/question/{{question.id}}/new-answer">ADD ANSWER</a></button>
 <h3 style="color: #f4e603; margin-left: 100px">Answers:</h3>
 <h3>{% for elem in answer %}
     <div class="vl"></div>
@@ -69,6 +71,7 @@
         {% endfor %}
 </div></div></div>
     {% endfor %}</h3> <br> <br>
+<button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 100px"><a href="http://127.0.0.1:5000/question/{{question.id}}/new-answer">ADD ANSWER</a></button>
 
 
 

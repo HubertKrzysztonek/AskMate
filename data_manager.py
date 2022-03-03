@@ -393,6 +393,15 @@ def get_user_answer(cursor, user_id):
     cursor.execute(query, [user_id])
     return cursor.fetchall()
 
+@database_common.connection_handler
+def users(cursor):
+    query = """
+        SELECT *
+        FROM users
+    """
+    cursor.execute(query)
+    return cursor.fetchall()
+
 
 @database_common.connection_handler
 def get_user_comment(cursor, user_id):

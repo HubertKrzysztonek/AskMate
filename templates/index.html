@@ -6,12 +6,13 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}">
 </head>
 <body>
-<h4>< just_ask ></h4>
+<h4 style="color:yellow">< just_ask ></h4>
 {%  if session[username] %}
-<p2><a style="color: yellow; margin-left: 500px" href="/logout"> logout </a></p2>
+    <p1 style="color: lightgoldenrodyellow;margin-left:75%">Hello {{ session[username]}}!</p1><br>
+<p5><a style="color: lightyellow;margin-left:75% " href="/user/1">profile | </a></p5><p5><a style="color: lightyellow" href="/logout"> log out </a></p5><br><br>
 {%  else %}
-<p2><a style="color: yellow; margin-left: 400px" href="/login"> login </a></p2>
-<p2><a style="color: yellow" href="/registration"> sign up </a></p2>
+<p5><a style="color: lightyellow; margin-left:75%" href="/login"> login |</a></p5><p5><a style="color: lightyellow" href="/registration"> sign up </a></p5><br><br>
+
 {% endif %}
 <div class="logo_line"></div>
 
@@ -32,10 +33,10 @@
     <button class="button-32" role="button" style="width:30%; margin-left: 200px">
         <a style="font-size: 20px" href="{{ url_for('add_question_get') }}">ADD QUESTION</a></button>
     <button class="button-32" role="button" style="width:30%">
-        <a style="font-size: 20px" href="/list">SEE QUESTIONS</a></button>
-     <button class="button-32" role="button" style="width:30%">
-        <a style="font-size: 20px" href="/user/1">USER</a></button>
- <button class="button-32" role="button" style="width:30%">
-        <a style="font-size: 20px" href="/bonusquestions">Bonus Question</a></button>
+        <a style="font-size: 20px" href="/list">SEE QUESTIONS</a></button><br><br>
+{#     <button class="button-32" role="button" style="width:30%;margin-left: 200px">#}
+{#        <a style="font-size: 20px" href="/user/1">USER</a></button>#}
+{# <button class="button-32" role="button" style="width:30%">#}
+{#        <a style="font-size: 20px" href="/bonusquestions">BONUS QUESTION</a></button>#}
 </body>
 </html>
