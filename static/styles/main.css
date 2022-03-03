@@ -125,6 +125,13 @@ p4 {
     color: white;
 }
 
+p10 {
+    margin-left: 200px;
+    font-size: 30px;
+    font-family: "Consolas", sans-serif;
+    color: lightgoldenrodyellow;
+}
+
 a {
     font-family: "Consolas", sans-serif;
     color: black;
@@ -150,6 +157,41 @@ a {
     touch-action: manipulation;
     margin-left: 100px;
 }
+
+.button-200 {
+    font-family: "Consolas", sans-serif;
+    background-color: dodgerblue;
+    border-radius: 12px;
+    color: #000;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 15px;
+    text-align: match-parent;
+    transition: 200ms;
+    width: 9%;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 15px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-left: 200px;
+}
+
+.button-200:not(:disabled):hover,
+.button-200:not(:disabled):focus {
+    outline: 0;
+    font-family: "Consolas", sans-serif;
+    background: #f4e603;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+}
+
+.button-200:disabled {
+    font-family: "Consolas", sans-serif;
+    filter: saturate(0.2) opacity(0.5);
+    cursor: not-allowed;
+}
+
 
 .button-32:not(:disabled):hover,
 .button-32:not(:disabled):focus {
@@ -465,6 +507,21 @@ label {
     margin-bottom: 25px;
 }
 
+.description em {
+  color: red;
+}
+
+.tagsite{
+  align-content: center;
+    margin-left: 37%;
+}
+
+.tags {
+    font-size: 30px;
+}
+#act {
+    font-size: 50px;
+}
 .login-text {
     text-align: left;
     padding-left: 0px;

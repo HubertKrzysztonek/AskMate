@@ -16,15 +16,13 @@
 {% endif %}
 <div class="logo_line"></div>
 
-
-<a href="/tags">tags</a>
-
 <form action="/search" method="get" , id="q">
     <label for="q" style="margin-left: 100px"><Title></Title></label><br><br>
     <textarea id="q" name="q" style=" height: 25px; width: 10%; margin-left: 75%"></textarea><br>
     <button class="button-32" style="padding: 1px 5px;transition: 20ms; margin-left: 75% " type="submit">Search</button>
 
     <br>
+    <a href="/tags" class="button-200">Show all tags</a>
     <h2 style="margin-left: 200px">LAST QUESTIONS: </h2>
     {% for elem in last_questions %}
         <p3 style="margin-left: 200px"><a style="color: aliceblue" href="http://127.0.0.1:5000/question/{{ elem.id }}">{{ elem.title }}</a></p3>
