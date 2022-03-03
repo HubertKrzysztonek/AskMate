@@ -66,6 +66,11 @@
     <label for="collapsible{{ elem.id }}" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
        {%  for com in comment %}
         {% if com.answer_id == elem.id %}
+<<<<<<< HEAD
+            {% if sesion[username] == user.username %}
+                {% endif %}
+=======
+>>>>>>> 8dfd89f5e54b0f3924e2780e0fbe054c03c3cdbd
     <p3 align="right">Comment: {{  com.message }}</p3><br>
     <p3 align="right" style="font-size: 12px">Added time: {{ com.submission_time }} </p3><br>
     <p3 align="right" style="font-size: 12px">Edit time: {{ com.edited_count }}</p3><br>
