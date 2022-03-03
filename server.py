@@ -15,8 +15,14 @@ def hello():
     sort = 'DESC'
     sort_by = 'submission_time'
     all_list_sorted = data_manager.sorting_main_page(sort_by, sort)
-    response = make_response(render_template("index.html", last_questions=all_list_sorted, username=SESSION_USERNAME))
-    return response
+    if session:
+        user = data_manager.get_user_username(username=session[SESSION_USERNAME])
+        response = make_response(
+            render_template("index.html", last_questions=all_list_sorted, username=SESSION_USERNAME, user=user))
+        return response
+    else:
+        response = make_response(render_template("index.html", last_questions=all_list_sorted, username=SESSION_USERNAME))
+        return response
 
 
 @app.route("/logout", methods=['GET'])
@@ -303,7 +309,6 @@ def login():
         if data_manager.check_login(username=request.form['username'], password=request.form['password']):
             user = request.form['username']
             session[SESSION_USERNAME] = user
-
             return redirect(url_for('hello'))
         else:
             wrong_login = True
