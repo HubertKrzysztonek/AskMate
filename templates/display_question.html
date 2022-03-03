@@ -10,14 +10,14 @@
 <div class="logo_line"></div>
 {#<h5>question:</h5>#}
 <h1>{{ question.title }}</h1>
-<h2>{{ question.message }}</h2>
-{% if tags == 'Notags' %}
-    {{ tags }}
-{% else %}
+<h2 style="margin-left: 100px">{{ question.message }}</h2>
+<!--{% if tags == 'Notags' %}-->
+<!--    {{ tags }}-->
+<!--{% else %}-->
 {% for ele in tags %}
-    </p1><a href=""><p5 style="">#{{ ele }}</p5></a>
+    <a href=""><p5 style="margin-left: 100px; color: lightyellow">#{{ ele }}</p5></a>
 {% endfor %}
-{% endif %}
+<!--{% endif %}-->
 {% if question.image == None %}
 {% else %}
     <img style="margin-left: 100px" alt="image" src="{{url_for('static', filename='images/' + question.image )}}" width="300" height="300"  >
@@ -28,8 +28,8 @@
 {#       <p6>ADD TAG</p6> </button>#}
 {#</form>#}
 <br>
-<button class="button-32" role="button" style="color: #eeeeee; margin-left: 100px"><a href="/question/{{ question.id }}/new-tag">ADD TAG</a> </button>
-<button class="button-32" role="button" style="color: #eeeeee;margin-left: 0px"><a href="/question/{{ question.id }}/new-comment">ADD COMMENT</a> </button>
+<button class="button-32" role="button" style="color: #eeeeee; margin-left: 100px;background-color: yellow"><a href="/question/{{ question.id }}/new-tag">ADD TAG</a> </button>
+<button class="button-32" role="button" style="color: #eeeeee;margin-left: 0px;background-color: yellow"><a href="/question/{{ question.id }}/new-comment">ADD COMMENT</a> </button>
 <br>
 <div style="margin-left: 100px; margin-right: 500px" class="wrap-collabsible"> <input id="collapsible" class="toggle" type="checkbox">
     <label for="collapsible" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
@@ -41,7 +41,7 @@
     <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 70%"><a href="/comment/{{ com.id }}/edit">EDIT COMMENT</a> </button><br>
         {% endif %}
     {% endfor %}
-</div></div></div>
+</div></div></div><br><br>
 <h3 style="color: #f4e603; margin-left: 100px">Answers:</h3>
 <h3>{% for elem in answer %}
     <div class="vl"></div>
@@ -63,7 +63,7 @@
     <button class="button-32" role="button" style="background-color: #f4e603;width:30%; margin-left: 100px"><a href="/answer/{{ elem.id }}/new-comment">ADD COMMENT</a> </button>
 
     <div style="margin-left: 100px; margin-right: 500px" class="wrap-collapsible"> <input id="collapsible{{ elem.id }}" class="toggle" type="checkbox">
-    <label for="collapsible{{ elem.id }}" class="lbl-toggle">Comments:</label><div class="collapsible-content"><div class="content-inner">
+    <label for="collapsible{{ elem.id }}" class="lbl-toggle" style="width: 340px; height: 20px">Comments:</label><div class="collapsible-content"><div class="content-inner">
        {%  for com in comment %}
         {% if com.answer_id == elem.id %}
     <p3 align="right">Comment: {{  com.message }}</p3><br>

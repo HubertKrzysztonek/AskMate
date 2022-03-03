@@ -1,6 +1,6 @@
 import database_common
 import bcrypt
-
+import psycopg2
 import database_common
 
 
@@ -128,7 +128,7 @@ def search_results_answers(cursor, text):
     return results
 
 
-# print(search_results_answers('a'))
+print(search_results_answers('abc'))
 
 
 @database_common.connection_handler

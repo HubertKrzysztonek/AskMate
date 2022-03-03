@@ -11,13 +11,12 @@
 <br>
 {%  if session[username] %}
 <form method="post" id="answer" enctype="multipart/form-data">
-    <h5>question:</h5>
-    <h1>{{ question.title }}</h1>
-    <h2>{{ question.message }}</h2>
-    <label for="answer" style="margin-left: 100px">Your answer <Title></Title>:</label><br><br>
+    <h1 style="margin-left: 100px">{{ question.title }}</h1>
+    <h2 style="margin-left: 100px">{{ question.message }}</h2>
+    <label for="answer" style="margin-left: 100px"><h5 style="margin-left: 100px;margin-right: 0px">Your answer:</h5> </label><br>
     <textarea id="answer" name="answer" rows="5" cols="50"></textarea><br><br>
-    <label for="file">Image</label>
-    <input type="file" name="file" id="file">
+    <label for="file"><h2 style="margin-left: 100px">Upload image</h2></label>
+    <input style="margin-left: 100px " type="file" name="file" id="file">
     <button class="button-32" type="submit">ADD</button>
         {%  else %}
     <p3>You must log in </p3>

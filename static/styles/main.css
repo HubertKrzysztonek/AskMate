@@ -87,8 +87,8 @@ h4 {
 h5 {
     font-size: 20px;
     margin-left: 100px;
-    margin-right: 500px;
-    margin-top: 70px;
+
+    margin-top: 0px;
     margin-bottom: 10px;
     color: yellow;
 }
@@ -319,14 +319,14 @@ input[type='checkbox'] {
 
 
 
-h5 {
-    font-family: "Consolas", sans-serif;
-  font-size:15px;
-  font-weight: 300;
-  line-height:1em;
-  text-align: center;
-  color: #4DC3FA;
-}
+/*h5 {*/
+/*    font-family: "Consolas", sans-serif;*/
+/*  font-size:15px;*/
+/*  font-weight: 300;*/
+/*  line-height:1em;*/
+/*  text-align: center;*/
+/*  color: #4DC3FA;*/
+/*}*/
 
 h6 {
     font-family: "Consolas", sans-serif;
