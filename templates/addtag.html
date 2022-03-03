@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Tag</title>
+     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
 </head>
 <body>
 {% if tags == 'Notags' %}
     <p>There is no tags!</p>
 {% else %}
-    <p>Acual tags:</p>
+    <p>Actual tags:</p>
     {% for tag in tags %}
         <p>{{ tag }} - <a href="/del-tag/{{ question_id }}/{{ tag }}">X</a></p>
     {% endfor %}

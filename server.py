@@ -70,7 +70,7 @@ def edit_answer(answer_id):
 
 @app.route("/add-question", methods=['GET'])
 def add_question_get():
-    return render_template("addquestion.html")
+    return render_template("addquestion.html",username = SESSION_USERNAME)
 
 
 @app.route("/add-question", methods=["POST"])
@@ -105,7 +105,12 @@ def question_new_answer(question_id):
             image.save(os.path.join(base_dir, app.config['IMAGE_UPLOADS'], image.filename))
             data_manager.save_new_answer(question_id, answer, image.filename)
             return redirect(url_for('display_question', question_id=question_id))
-    return render_template('post_answer.html', question=question, answer=answer)
+    return render_template('post_answer.html', question=question, username = SESSION_USERNAME, answer=answer)
+
+@app.route("/users", methods=['GET'])
+def users ():
+    users = data_manager.users ()
+    return render_template('users.html', users=users)
 
 
 @app.route("/question/<question_id>/delete")
@@ -204,12 +209,6 @@ def add_tag(question_id):
     tags = id_to_tags(question_id)
     return render_template('addtag.html', tags=tags, question_id=question_id)
 
-@app.route('/del-tag/<question_id>/<tag>')
-def del_tag_from_queestion(question_id, tag):
-    tag_id = data_manager.get_id_by_tag_name(tag)
-    data_manager.del_tag_from_question(question_id, tag_id["id"])
-    return redirect(f'/question/{question_id}/new-tag')
-
 
 @app.route('/question/<question_id>/new-tag', methods=['POST'])
 def new_tag(question_id):
@@ -236,6 +235,30 @@ def new_tag(question_id):
         else:
             data_manager.save_tag_id_to_question(question_id, new_id["id"])
     return redirect(url_for('display_question', question_id=question_id))
+
+
+@app.route('/del-tag/<question_id>/<tag>')
+def del_tag_from_queestion(question_id, tag):
+    tag_id = data_manager.get_id_by_tag_name(tag)
+    data_manager.del_tag_from_question(question_id, tag_id["id"])
+    return redirect(f'/question/{question_id}/new-tag')
+
+
+@app.route('/tags')
+def print_tags():
+    full_db_sorted = {}
+    all_tags = data_manager.get_all_tags()
+    list_of_tags = []
+    for tag in all_tags:
+        list_of_tags.append(tag['name'])
+    for tag in list_of_tags:
+        tagid = data_manager.get_id_by_tag_name(tag)
+        all_quest_id = data_manager.get_all_questions_id_by_tag_id(tagid['id'])
+        count = 0
+        for ele in all_quest_id:
+             count +=1
+        full_db_sorted[tag] = count
+    return render_template('tags.html', all_tags=list_of_tags, dict=full_db_sorted)
 
 
 def id_to_tags(question_id):
